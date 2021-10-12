@@ -1,0 +1,174 @@
+swagger: '2.0'
+info:
+  description: >-
+    Will describe the inputs and outputs for the 'incomingData' service that has been created for the ATW (access to work) project but is intended to become a reusable component to handle all 'submissions' for SHOP (single health operating platform)
+  version: 1.0.0
+  title: SHOP Incoming Submissions Microservice API
+host: TBD
+basePath: /v1
+tags:
+  - name: submissions
+    description: POST endpoints
+schemes:
+  - http
+  - https
+
+paths:
+  /submission:
+    post:
+      tags:
+        - submissions
+      summary: /submission
+      description: >-
+        Receives a new submission.  The submission contents will be validated, encrypted and saved to the 'incomingData' MongoDB collection.  In addition, the data-capture will be propagated to subscribed services through an 'incomingData' event.
+      operationId: receiveApplication
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: application
+          schema:
+            $ref: '#/definitions/IncomingSubmission'
+      responses:
+        '200':
+          description: simple http status response, no return contents
+        '400':
+          description: \'Payload contains invalid items\' as the body if one of the input items is invalid.
+        '500':
+          description: \'Unable to process request\' if an internal exception occurs
+
+definitions:
+
+  IncomingSubmission:
+    type: object
+    required:
+      - msg_id
+      - ref
+      - date_submitted
+      - applicant
+      - data_capture
+      - declaration
+    properties:
+      msg_id:
+        description: The Msg_id is used to determine how to validate and route the data. Existing types are access-to-work.submission.renewal and access-to-work.submission.new
+        type: string
+      ref:
+        description: The case reference number automatically generated and passed in to the api
+        type: string
+      date_submitted:
+        description: The date this application should be considered "submitted". May not match current time (e.g. in the case of IDOC - Initial Date of Contact)
+        type: string
+        format: date-time
+      applicant:
+        description: Details about the person submitting this application
+        $ref: '#/definitions/IncomingCustomer'
+      data_capture:
+        description: A free form object that contains all benefit-specific data that was captured from the customer. This is stored and retrieved exactly as provided here.
+        type: object
+      declaration:
+        description: A copy of the declaration that has been agree to by the Customer at the time of submitting this application
+        type: string
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+
+  IncomingCustomer:
+    type: object
+    required:
+      - forenames
+      - dob
+      - residence_address
+    properties:
+      forenames:
+        type: string
+        description: will fail validation if null or empty
+      surname:
+        type: string
+        description: the claimant surname can be null or blank
+      dob:
+        type: string
+        format: date
+        description: will fail validation if null, empty or is in the future.  format is yyyy-MM-dd
+      residence_address:
+        $ref: '#/definitions/PostalAddress'
+      contact_options:
+        $ref: '#/definitions/ContactOptions'
+      representative:
+        $ref: '#/definitions/Representative'
+
+  Tag:
+    description: General purpose method for tagging items with custom key=>value metadata
+    type: object
+    required:
+      - name
+      - value
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+
+  PostalAddress:
+    type: object
+    required:
+      - lines
+      - postcode
+    properties:
+      lines:
+        type: array
+        items:
+          type: string
+      premises:
+        type: string
+      postcode:
+        type: string
+
+  Representative:
+    description: This Customer's representative
+    type: object
+    required:
+      - full_name
+      - relationship
+      - tel
+    properties:
+      full_name:
+        description: Full name of the rep.  will fail validation if null or empty
+        type: string
+      relationship:
+        description: The relationship held between this person and the Customer.  will fail validation if null or empy
+        type: string
+      email:
+        description: this is an optional field and can be null or blank
+        type: string
+      tel:
+        description: will fail validation if null or empty
+        type: string
+
+  ContactOptions:
+    type: array
+    items:
+      type: object
+      required:
+        - method
+        - data
+        - preferred
+      properties:
+        method:
+          description: Contact method, e.g. tel, email, post, etc.  will fail vaidation if null, empty or does not carry one of the enum values
+          type: string
+          default: tel
+          enum:
+            - email
+            - tel
+            - telmobile
+            - postal
+        data:
+          description: Details about the contact method, e.g. postal address, telephone numbers, etc
+          type: string
+        preferred:
+          description: Whether this is the person's preferred method of contact
+          default: false
+          type: boolean

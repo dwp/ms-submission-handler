@@ -1,0 +1,163 @@
+{
+  "msg_id": "%s",
+  "ref": "2PJE5M",
+  "date_submitted": "%s",
+  "applicant": {
+    "forenames": "Testy",
+    "surname": "McTesterton",
+    "dob": "1980-01-01",
+    "residence_address": {
+      "lines": [
+        "Building and street line 1 of 2",
+        "",
+        "Town",
+        ""
+      ],
+      "premises": "",
+      "postcode": "S1 1DJ"
+    },
+    "contact_options": [
+      {
+        "method": "telmobile",
+        "data": "09876543211",
+        "preferred": true
+      }
+    ]
+  },
+  "data_capture": {
+    "language": "en",
+    "conditions": [
+      {
+        "name": "Autistic Spectrum Disorder with learning difficulties",
+        "start_date": "1980-01-01"
+      }
+    ],
+    "hospital_planned": "yes",
+    "statutory_pay_other": "paternity",
+    "fit_for_work": "weeks4to8",
+    "consent": "yes",
+    "nino": "aa370773a",
+    "bank_account_name": "Account name",
+    "bank_name": "Bank name",
+    "bank_sort_code": "111111",
+    "bank_account_number": "12345678",
+    "claim_start_date": "2019-01-01",
+    "due_date": "2019-05-01",
+    "medical_centre": {
+      "name": "medical centre",
+      "address": {
+        "lines": [
+          "medical centre street",
+          "",
+          "medical centre city",
+          ""
+        ],
+        "premises": "",
+        "postcode": "M12 1DJ"
+      },
+      "tel": "09876543211"
+    },
+    "terminal_prognosis": "dontKnow",
+    "hospital_name": "Hospital name",
+    "hospital_ward": "Ward number",
+    "hospital_admission_date": "2019-01-01",
+    "planned_hospital_name": "Future hospital name",
+    "planned_hospital_ward": "Future hospital ward",
+    "planned_hospital_admission_date": "2019-03-01",
+    "voluntary_work": [
+      {
+        "organisation_name": "Voluntary Organisation name",
+        "organisation_address": {
+          "lines": [
+            "Voluntary Organisation st",
+            "",
+            "Voluntary Organisation town",
+            ""
+          ],
+          "premises": "",
+          "postcode": "V12 1DJ"
+        },
+        "role": "Stuff",
+        "hours": "10",
+        "expenses_details": "Things"
+      }
+    ],
+    "employments": [
+      {
+        "job_title": "Job title",
+        "employer_name": "Employer name",
+        "employer_tel": "Telephone number",
+        "employer_address": {
+          "lines": [
+            "Employer Building and street",
+            "",
+            "Employer Town",
+            ""
+          ],
+          "premises": "",
+          "postcode": "E12 1DJ"
+        },
+        "employment_status": "employee",
+        "hours": "5",
+        "frequency": "monthly",
+        "net_pay": "123.12",
+        "support": "yes",
+        "expenses_details": "More things"
+      }
+    ],
+    "ssp_end": "2020-01-01",
+    "pensions": [
+      {
+        "pension_provider": "Pension or annuity provider",
+        "provider_ref": "Pension or annuity ref",
+        "provider_tel": "Pension or annuity tel",
+        "provider_address": {
+          "lines": [
+            "Pension or annuity st",
+            "",
+            "Pension or annuity town",
+            ""
+          ],
+          "premises": "",
+          "postcode": "P12 1DJ"
+        },
+        "amount": "123",
+        "frequency": "weekly",
+        "inherited": "yes"
+      }
+    ],
+    "insurance": [
+      {
+        "insurance_provider": "Insurance provider",
+        "provider_ref": "Insurance ref",
+        "provider_tel": "Insurance tel",
+        "provider_address": {
+          "lines": [
+            "Insurance st",
+            "",
+            "Insurance town",
+            ""
+          ],
+          "premises": "",
+          "postcode": "I12 1DJ"
+        },
+        "amount": "123",
+        "frequency": "every4Weeks",
+        "premiums": "yes"
+      }
+    ],
+    "correspondence_address": {
+      "lines": [
+        "Correspondence st",
+        "",
+        "Correspondenceville",
+        ""
+      ],
+      "premises": "",
+      "postcode": "S2 1NN"
+    },
+    "bank_roll_number": "roll number"
+  },
+  "declaration": "By sending the application you agree that:\ndeclaration:li1\ndeclaration:li2\ndeclaration:li3\nYou could be prosecuted or have to pay a penalty if you deliberately give the wrong or incomplete information or do not report changes.\nI agree, send my application",
+  "tags": []
+}

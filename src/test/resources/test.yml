@@ -1,0 +1,65 @@
+server:
+  applicationConnectors:
+    - type: https
+      port: 9044
+      keyStorePath: src/test/resources/submissions-handler-tls-server.ks
+      keyStorePassword: password
+      keyStoreType: JKS
+      trustStorePath: src/test/resources/submissions-handler-tls-server.ts
+      trustStorePassword: password
+      trustStoreType: JKS
+      needClientAuth: true
+      wantClientAuth: true
+      certAlias: submission_service
+      validateCerts: true
+      validatePeers: true
+      allowRenegotiation: false
+  adminConnectors:
+    - type: http
+      port: 9045
+  requestLog:
+      type: external
+
+mongoDbUri: mongodb://mongo-db:9897
+mongoDatabase: incomingData
+mongoCollectionName: submissions
+mongoSslInvalidHostNameAllowed: true
+
+mongoDbSslTruststoreFilename: null
+mongoDbSslKeystoreFilename: null
+mongoDbSslTruststorePassword: null
+mongoDbSslKeystorePassword: null
+
+mongoCryptoConfiguration:
+  kmsEndpointOverride: http://localstack:4599
+  dataKeyRequestId: alias/test_mongo_request_id
+
+mqCryptoConfiguration:
+  kmsEndpointOverride: http://localstack:4599
+  dataKeyRequestId: alias/test_mq_request_id
+
+snsTopicName: sub-handler-topic
+snsSubject: submission-handler
+snsEncryptMessages: true
+
+snsConfiguration:
+  endpointOverride: "http://localstack:4575"
+  pathStyleAccessEnabled: true
+  region: US_EAST_1
+
+submissionServices:
+  access-to-work.submission.new:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+    snsEventRoutingKey: incoming.submission.atw
+    schemaDocReference: submissionAtw
+    jsonSchemaValidationDoc: src/main/resources/atw.SubmissionItem.JsonSchemaDoc.json
+  new-style-esa.submission.new:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.EsaSubmissionItem
+    snsEventRoutingKey: incoming.submission.esa
+    schemaDocReference: submissionEsa
+    jsonSchemaValidationDoc: src/main/resources/esa.SubmissionItem.JsonSchemaDoc.json
+
+logging:
+  level: WARN
+  loggers:
+    "uk.gov": INFO

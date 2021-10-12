@@ -1,0 +1,43 @@
+{
+  "submissionReferral": {
+    "request": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "msg_id",
+        "full_name",
+        "date_of_birth",
+        "national_insurance_number"
+      ],
+      "type": "object",
+      "properties": {
+        "full_name": {
+          "type": "string",
+          "description": "The full name of the claimant whose referral is being accepted into SHOP"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "description": "The date of birth of the claimant. Must be in the ISO date format of YYYY-MM-DD",
+          "format": "date"
+        },
+        "national_insurance_number": {
+          "type": "string",
+          "description": "The national insurance number of the claimant. Must not have any spaces and must be a valid NINO"
+        },
+        "msg_id": {
+          "type": "string",
+          "description": "determine how to validate and route the data"
+        }
+      }
+    },
+    "_meta": {
+      "path": "/referral",
+      "method": "post"
+    },
+    "responses": {
+      "202": "",
+      "500": "",
+      "400": "",
+      "422": ""
+    }
+  }
+}

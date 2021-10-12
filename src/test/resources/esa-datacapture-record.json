@@ -1,0 +1,182 @@
+{
+  "language": "en",
+  "conditions": [
+    {
+      "name": "bluetooth card",
+      "start_date": "2003-02-01"
+    },
+    {
+      "name": "back-end capacitor",
+      "start_date": "2003-02-01"
+    },
+    {
+      "name": "back-end transmitter",
+      "start_date": "2003-02-01"
+    }
+  ],
+  "medical_centre": {
+    "name": "Nitzsche, Abbott and Parisian",
+    "tel": "(181) 729-7881",
+    "address": {
+      "lines": [
+        "707 Stephanie Garden",
+        "",
+        "Damonhaven"
+      ],
+      "premises": "",
+      "postcode": "LS1 1DJ"
+    },
+    "doctor": "Dr. Wilfredo Kassulke"
+  },
+  "doc_share_with_dwp": "yes",
+  "dwp_share_with_doc": "yes",
+  "work_overseas": "yes",
+  "military_overseas": "yes",
+  "statutory_pay_other": "none",
+  "nino": "AA370773A",
+  "bank_account_name": "Mariam King",
+  "bank_name": "Prohaska - Fisher",
+  "bank_sort_code": "011934",
+  "bank_account_number": "12345678",
+  "claim_start_date": "2019-04-05",
+  "universal_credit": "yes",
+  "back_to_work": "no",
+  "pregnant": "yes",
+  "due_date": "2019-07-11",
+  "severe_condition": "no",
+  "hospital_inpatient": "yes",
+  "hospital_name": "Bernhard Inc",
+  "hospital_ward": "Gottlieb - Senger",
+  "hospital_admission_date": "2019-01-26",
+  "voluntary_work_question": "yes",
+  "voluntary_work": [
+    {
+      "organisation_name": "Hirthe, Lemke and Yundt",
+      "organisation_address": {
+        "lines": [
+          "888 Lindgren Junctions",
+          "",
+          ""
+        ],
+        "premises": "",
+        "postcode": "LS1 1DJ"
+      },
+      "role": "role",
+      "same_hours": "yes",
+      "hours": "1"
+    },
+    {
+      "organisation_name": "Quitzon Inc",
+      "organisation_address": {
+        "lines": [
+          "983 Hyatt Well",
+          "",
+          ""
+        ],
+        "premises": "",
+        "postcode": "LS1 1DJ"
+      },
+      "role": "Architecto",
+      "same_hours": "yes",
+      "hours": "1"
+    },
+    {
+      "organisation_name": "Schaden Group",
+      "organisation_address": {
+        "lines": [
+          "395 Zemlak Rapid",
+          "",
+          ""
+        ],
+        "premises": "",
+        "postcode": "LS1 1DJ"
+      },
+      "role": "engineer",
+      "same_hours": "yes",
+      "hours": "1"
+    }
+  ],
+  "employment_question": "yes",
+  "employments": [
+    {
+      "job_title": "Senior Data Engineer",
+      "employer_name": "Bernier, Konopelski and DAmore",
+      "employer_tel": "(966) 744-4421",
+      "employer_address": {
+        "lines": [
+          "767 Franecki Turnpike",
+          "",
+          "South Brookhaven"
+        ],
+        "premises": "",
+        "postcode": "LS1 1DJ"
+      },
+      "employment_status": [
+        "employee",
+        "subContractor"
+      ],
+      "off_sick": "no",
+      "same_hours": "yes",
+      "hours": "12",
+      "frequency": "every4Weeks",
+      "net_pay": "1234",
+      "support": "yes",
+      "expenses_question": "yes",
+      "expenses_details": "detail"
+    }
+  ],
+  "ssp": "yes",
+  "ssp_end": "2019-05-17",
+  "pension_question": "yes",
+  "pensions": [
+    {
+      "pension_provider": "",
+      "provider_ref": "hjkh",
+      "provider_tel": "",
+      "provider_address": {
+        "lines": [
+          "",
+          "",
+          ""
+        ],
+        "premises": "",
+        "postcode": ""
+      },
+      "start_date": "",
+      "deductions": "yes",
+      "amount_gross": "",
+      "frequency": "weekly",
+      "inherited": "",
+      "amount_net": "",
+      "deduction_details": [
+        {
+          "amount": "",
+          "detail": ""
+        }
+      ]
+    }
+  ],
+  "insurance_question": "yes",
+  "insurance": [
+    {
+      "insurance_provider": "",
+      "provider_ref": "jhjkh",
+      "provider_tel": "",
+      "provider_address": {
+        "lines": [
+          "",
+          "",
+          ""
+        ],
+        "premises": "",
+        "postcode": ""
+      },
+      "amount": "",
+      "premiums": "notsure"
+    }
+  ],
+  "mobile": "yes",
+  "coronavirus": "yes",
+  "coronavirus_date": "2020-02-01",
+  "other_health_condition": "yes"
+}

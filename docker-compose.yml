@@ -1,0 +1,55 @@
+version: '3'
+networks:
+  test:
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:0.11.2 #Pinning to 0.11.2. latest contains bug preventing running services to be returned by curl on localstack service health checks issue 2454.
+    environment:
+      SERVICES: ${LOCALSTACK_SERVICES}
+      HOSTNAME_EXTERNAL: ${LOCALSTACK_HOSTNAME}
+    networks:
+      - test
+
+  localstack-init:
+    container_name: localstack-init
+    image: mesosphere/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID: dummyaccess
+      AWS_SECRET_ACCESS_KEY: dummysecret
+      AWS_DEFAULT_REGION: us-east-1
+    networks:
+      - test
+    entrypoint: /bin/sh -c
+    command: 
+      - |
+        until nc -z localstack 4599; do echo "localstack not available, sleeping 10."; sleep 10; done
+        aws kms create-key --endpoint-url http://localstack:4599 --output=text | sed -E 's/.*('"${KMS_KEY_PATTERN}"').*/\1/' > key.txt
+        aws kms create-alias --endpoint-url http://localstack:4599 --alias-name alias/test_mongo_request_id --target-key-id `cat key.txt`
+        aws kms create-key --endpoint-url http://localstack:4599 --output=text | sed -E 's/.*('"${KMS_KEY_PATTERN}"').*/\1/' > key.txt
+        aws kms create-alias --endpoint-url http://localstack:4599 --alias-name alias/test_mq_request_id --target-key-id `cat key.txt`
+        while nc -z localstack 4599; do echo "localstack still running, keeping cli container active."; sleep 30; done
+
+  mongo-db:
+    image: mongo:3.6
+    command: mongod --port 9897
+    expose:
+      - 9897
+    networks:
+      - test
+
+  cucumber-tests: 
+    image: ${MAVEN_IMAGE}
+    entrypoint: /bin/bash -c
+    command:  
+      - |
+        until [ `curl -s http://localstack:8080/health | grep -o running | wc -l` = "$NUM_LOCALSTACK_SERVICES" ]; do echo "localstack services not available, sleeping 10."; sleep 10; done
+        sleep 10 #wait for keys to be created once localstack services are available (aws cli not available)
+        mvn -Dtest=uk.gov.dwp.health.shop.submissionhandler.integration.RunCukesTest ${MVN_OPTS} ${MVN_CLI_OPTS} test 
+    working_dir: /usr/src
+    volumes:
+      - .:/usr/src
+      - ${MVN_M2}:/root/.m2
+      - ${MVN_SETTINGS_FILE}:/root/.m2/settings.xml
+    networks:
+      - test

@@ -1,0 +1,60 @@
+server:
+  applicationConnectors:
+    - type: ${SERVER_APP_CONNECTOR:-http}
+      port: ${SERVER_APP_PORT:-9044}
+  adminConnectors:
+    - type: ${SERVER_ADMIN_CONNECTOR:-http}
+      port: ${SERVER_ADMIN_PORT:-9045}
+
+mongoDbUri: ${MONGO_URI}
+mongoDatabase: ${MONGO_DB}
+mongoCollectionName: ${MONGO_COLLECTION_NAME}
+mongoSslInvalidHostNameAllowed: true
+
+mongoDbSslTruststoreFilename: null
+mongoDbSslKeystoreFilename: null
+mongoDbSslTruststorePassword: null
+mongoDbSslKeystorePassword: null
+
+mongoCryptoConfiguration:
+  kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}
+  dataKeyRequestId: ${MONGO_CRYPTO_KEY_ALIAS}
+
+mqCryptoConfiguration:
+  kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}
+  dataKeyRequestId: ${MQ_CRYPTO_KEY_ALIAS}
+
+snsTopicName: ${SNS_TOPIC_NAME}
+snsSubject: ${SNS_SUBJECT}
+snsEncryptMessages: ${SNS_ENCRYPT_MESSAGES:-true}
+
+snsConfiguration: 
+  endpointOverride: ${SNS_ENDPOINT_OVERRIDE:-null}
+  region: ${SNS_CONFIG_REGION:-eu-west-2}
+
+submissionServices:
+  access-to-work.submission.new:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+    snsEventRoutingKey: ${ATW_CUSTOMER_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.atw}
+    schemaDocReference: submissionAtw
+    jsonSchemaValidationDoc: /opt/ms-submission-handler/atw.SubmissionItem.JsonSchemaDoc.json
+  access-to-work.submission.renewal:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+    snsEventRoutingKey: ${ATW_RENEWAL_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.atw.renewal}
+    schemaDocReference: submissionAtw
+    jsonSchemaValidationDoc: /opt/ms-submission-handler/atw.SubmissionItem.JsonSchemaDoc.json
+  access-to-work.submission.csi:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+    snsEventRoutingKey: ${ATW_CSI_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.atw.csi}
+    schemaDocReference: submissionAtw
+    jsonSchemaValidationDoc: /opt/ms-submission-handler/atw.SubmissionItem.JsonSchemaDoc.json
+  esa.submission.new:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.EsaSubmissionItem
+    snsEventRoutingKey: ${ESA_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.esa}
+    schemaDocReference: submissionEsa
+    jsonSchemaValidationDoc: /opt/ms-submission-handler/esa.SubmissionItem.JsonSchemaDoc.json
+
+applicationInfoEnabled: ${ENABLE_APP_INFO_ENDPOINT:-false}
+
+logging:
+  type: ${LOGGING_TYPE:-external}

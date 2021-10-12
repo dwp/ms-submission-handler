@@ -1,0 +1,73 @@
+server:
+  applicationConnectors:
+    - type: https
+      port: 9044
+      keyStorePath: src/test/resources/submissions-handler-tls-server.ks
+      keyStorePassword: password
+      keyStoreType: JKS
+      trustStorePath: src/test/resources/submissions-handler-tls-server.ts
+      trustStorePassword: password
+      trustStoreType: JKS
+      needClientAuth: true
+      wantClientAuth: true
+      certAlias: submission_service
+      validateCerts: true
+      validatePeers: true
+      allowRenegotiation: false
+  adminConnectors:
+    - type: http
+      port: 9045
+  requestLog:
+    type: external
+
+mongoDbUri: mongodb://localhost:9897
+mongoDatabase: incomingData
+mongoCollectionName: submissions
+mongoSslInvalidHostNameAllowed: true
+
+mongoDbSslTruststoreFilename: some/mongo/db/truststore.ts
+mongoDbSslKeystoreFilename: some/mongo/db/keystore.ks
+mongoDbSslTruststorePassword: password
+mongoDbSslKeystorePassword: password
+
+mongoCryptoConfiguration:
+  kmsEndpointOverride: http://localhost:5678
+  dataKeyRequestId: test_mongo_request_id
+
+mqCryptoConfiguration:
+  kmsEndpointOverride: http://localhost:5678
+  dataKeyRequestId: test_mq_request_id
+
+snsTopicName: sub-handler-topic
+snsSubject: submission-handler
+snsEncryptMessages: true
+
+snsConfiguration:
+  s3EndpointOverride: "http://localhost:4572"
+  endpointOverride: "http://localhost:4575"
+  largePayloadSupportEnabled: true
+  pathStyleAccessEnabled: true
+  s3BucketName: "sns-bucket"
+  region: US_EAST_1
+
+applicationInfoEnabled: true
+
+submissionServices:
+    access-to-work.submission.new:
+      serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+      snsEventRoutingKey: incoming.submission.atw
+      schemaDocReference: submissionAtw
+      jsonSchemaValidationDoc: src/main/resources/atw.SubmissionItem.JsonSchemaDoc.json
+    access-to-work.submission.renewal:
+      serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+      snsEventRoutingKey: incoming.submission.atw.renewal
+      schemaDocReference: submissionAtw
+      jsonSchemaValidationDoc: src/main/resources/atw.SubmissionItem.JsonSchemaDoc.json
+    esa.submission.new:
+      serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.EsaSubmissionItem
+      snsEventRoutingKey: rabbit.esa.new
+      schemaDocReference: submissionEsa
+      jsonSchemaValidationDoc: src/main/resources/esa.SubmissionItem.JsonSchemaDoc.json
+
+logging:
+  type: external

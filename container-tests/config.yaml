@@ -1,0 +1,11 @@
+# Documentation can be found here https://github.com/GoogleContainerTools/container-structure-test
+schemaVersion: "2.0.0"
+
+fileExistenceTests:
+  - name: 'Jar File'
+    path: '/ms-submission-handler.jar'
+    shouldExist: true
+
+
+metadataTest:
+  entrypoint: [ "java", "-jar", "/ms-submission-handler.jar", "server",  "/opt/ms-submission-handler/config.yml"]

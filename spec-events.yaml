@@ -1,0 +1,178 @@
+info:
+  description: >-
+    Events published by the ms-submission-handler microservice.
+  version: 0.0.1
+  title: SHOP Incoming Submissions Microservice API
+
+publishedEvents:
+  incoming.submission.atw:
+    description: >-
+      A new access-to-work (atw) submission has been received
+    required:
+      - msg_id
+      - ref
+      - date_submitted
+      - applicant
+      - data_capture
+      - declaration
+    attributes:
+      msg_id:
+        description: The Msg_id is used to determine how to validate and route the data. Existing types are access-to-work.submission.renewal and access-to-work.submission.new
+        type: string
+      ref:
+        description: The case reference number automatically generated and passed in to the api
+        type: string
+      date_submitted:
+        description: The date this application should be considered "submitted". May not match current time (e.g. in the case of IDOC - Initial Date of Contact)
+        type: string
+        format: date-time
+      applicant:
+        description: Details about the person submitting this application
+        $ref: '#/definitions/IncomingCustomer'
+      data_capture:
+        description: A free form object that contains all benefit-specific data that was captured from the customer. This is stored and retrieved exactly as provided here.
+        type: object
+      declaration:
+        description: A copy of the declaration that has been agree to by the Customer at the time of submitting this application
+        type: string
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+
+  incoming.submission.atw.renewal:
+    description: >-
+      An access-to-work (atw) renewal submission has been received
+    required:
+      - msg_id
+      - ref
+      - date_submitted
+      - applicant
+      - data_capture
+      - declaration
+    attributes:
+      msg_id:
+        description: The Msg_id is used to determine how to validate and route the data. Existing types are access-to-work.submission.renewal and access-to-work.submission.new
+        type: string
+      ref:
+        description: The case reference number automatically generated and passed in to the api
+        type: string
+      date_submitted:
+        description: The date this application should be considered "submitted". May not match current time (e.g. in the case of IDOC - Initial Date of Contact)
+        type: string
+        format: date-time
+      applicant:
+        description: Details about the person submitting this application
+        $ref: '#/definitions/IncomingCustomer'
+      data_capture:
+        description: A free form object that contains all benefit-specific data that was captured from the customer. This is stored and retrieved exactly as provided here.
+        type: object
+      declaration:
+        description: A copy of the declaration that has been agree to by the Customer at the time of submitting this application
+        type: string
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+
+subscribedEvents:
+
+definitions:
+
+  IncomingCustomer:
+    type: object
+    required:
+      - forenames
+      - dob
+      - residence_address
+    properties:
+      forenames:
+        type: string
+        description: will fail validation if null or empty
+      surname:
+        type: string
+        description: the claimant surname can be null or blank
+      dob:
+        type: string
+        format: date
+        description: will fail validation if null, empty or is in the future.  format is yyyy-MM-dd
+      residence_address:
+        $ref: '#/definitions/PostalAddress'
+      contact_options:
+        $ref: '#/definitions/ContactOptions'
+      representative:
+        $ref: '#/definitions/Representative'
+
+  Tag:
+    description: General purpose method for tagging items with custom key=>value metadata
+    type: object
+    required:
+      - name
+      - value
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+
+  PostalAddress:
+    type: object
+    required:
+      - lines
+      - postcode
+    properties:
+      lines:
+        type: array
+        items:
+          type: string
+      premises:
+        type: string
+      postcode:
+        type: string
+
+  Representative:
+    description: This Customer's representative
+    type: object
+    required:
+      - full_name
+      - relationship
+      - tel
+    properties:
+      full_name:
+        description: Full name of the rep.  will fail validation if null or empty
+        type: string
+      relationship:
+        description: The relationship held between this person and the Customer.  will fail validation if null or empy
+        type: string
+      email:
+        description: this is an optional field and can be null or blank
+        type: string
+      tel:
+        description: will fail validation if null or empty
+        type: string
+
+  ContactOptions:
+    type: array
+    items:
+      type: object
+      required:
+        - method
+        - data
+        - preferred
+      properties:
+        method:
+          description: Contact method, e.g. tel, email, post, etc.  will fail vaidation if null, empty or does not carry one of the enum values
+          type: string
+          default: tel
+          enum:
+            - email
+            - tel
+            - telmobile
+            - postal
+        data:
+          description: Details about the contact method, e.g. postal address, telephone numbers, etc
+          type: string
+        preferred:
+          description: Whether this is the person's preferred method of contact
+          default: false
+          type: boolean
