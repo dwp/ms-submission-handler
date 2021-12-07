@@ -1,9 +1,9 @@
 package uk.gov.dwp.health.shop.submissionhandler.application.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.internal.MongoClientImpl;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -11,9 +11,6 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-import org.slf4j.LoggerFactory;
-import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration;
-import uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +20,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration;
+import uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem;
 
 import java.io.IOException;
 import java.net.URI;
@@ -97,7 +97,7 @@ public class MongoDbOperationsTest {
         MongoDatabase db = instance.getMongoClient().getDatabase(configuration.getMongoDatabase());
         MongoCollection<Document> collection = db.getCollection(configuration.getMongoCollectionName());
 
-        assertThat("should only be one collection", collection.count(), is(equalTo(1L)));
+        assertThat("should only be one collection", collection.countDocuments(), is(equalTo(1L)));
 
         Document doc = collection.find().first();
         LOG.info("resolved :: {}", doc);
@@ -111,9 +111,13 @@ public class MongoDbOperationsTest {
     @Test
     public void testNoTrustStoreMeansNoSSLSetting() throws URISyntaxException {
         when(configuration.getMongoDbUri()).thenReturn(new URI("mongodb://a-secure-endpoint:9897"));
-        MongoClient localClient = new MongoDbOperations(configuration).getMongoClient();
+        MongoClientImpl localClient =
+                (MongoClientImpl) new MongoDbOperations(configuration).getMongoClient();
 
-        assertThat("should be configured without ssl", localClient.getMongoClientOptions().isSslEnabled(), is(equalTo(false)));
+        assertThat(
+                "should be configured without ssl",
+                localClient.getSettings().getSslSettings().isEnabled(),
+                is(equalTo(false)));
         assertNull("no truststore value", System.getProperty(TRUSTSTORE_PROPERTY));
         assertNull("no truststore pass", System.getProperty(TRUSTSTORE_PASS_PROPERTY));
         assertNull("no keystore value", System.getProperty(KEYSTORE_PROPERTY));
@@ -126,9 +130,13 @@ public class MongoDbOperationsTest {
         when(configuration.getMongoDbSslTruststoreFilename()).thenReturn("truststore.ts");
         when(configuration.getMongoDbSslTruststorePassword()).thenReturn("password");
 
-        MongoClient localClient = new MongoDbOperations(configuration).getMongoClient();
+        MongoClientImpl localClient =
+                (MongoClientImpl) new MongoDbOperations(configuration).getMongoClient();
 
-        assertThat("should be configured with ssl", localClient.getMongoClientOptions().isSslEnabled(), is(equalTo(true)));
+        assertThat(
+                "should be configured with ssl",
+                localClient.getSettings().getSslSettings().isEnabled(),
+                is(equalTo(true)));
         assertNotNull("truststore value", System.getProperty(TRUSTSTORE_PROPERTY));
         assertNotNull("truststore pass", System.getProperty(TRUSTSTORE_PASS_PROPERTY));
         assertNull("no keystore value", System.getProperty(KEYSTORE_PROPERTY));
@@ -143,9 +151,13 @@ public class MongoDbOperationsTest {
         when(configuration.getMongoDbSslKeystoreFilename()).thenReturn("keystore.ts");
         when(configuration.getMongoDbSslKeystorePassword()).thenReturn("password_ks");
 
-        MongoClient localClient = new MongoDbOperations(configuration).getMongoClient();
+        MongoClientImpl localClient =
+                (MongoClientImpl) new MongoDbOperations(configuration).getMongoClient();
 
-        assertThat("should be configured with ssl", localClient.getMongoClientOptions().isSslEnabled(), is(equalTo(true)));
+        assertThat(
+                "should be configured with ssl",
+                localClient.getSettings().getSslSettings().isEnabled(),
+                is(equalTo(true)));
         assertNotNull("no truststore value", System.getProperty(TRUSTSTORE_PROPERTY));
         assertNotNull("no truststore pass", System.getProperty(TRUSTSTORE_PASS_PROPERTY));
         assertNotNull("no keystore value", System.getProperty(KEYSTORE_PROPERTY));
@@ -157,9 +169,16 @@ public class MongoDbOperationsTest {
         when(configuration.getMongoDbUri()).thenReturn(new URI("mongodb://a-secure-endpoint:9897"));
         when(configuration.isMongoSslInvalidHostNameAllowed()).thenReturn(true);
 
-        MongoClient localClient = new MongoDbOperations(configuration).getMongoClient();
+        MongoClientImpl localClient =
+                (MongoClientImpl) new MongoDbOperations(configuration).getMongoClient();
 
-        assertThat("should be configured with ssl", localClient.getMongoClientOptions().isSslEnabled(), is(equalTo(false)));
-        assertThat("should be configured with ssl", localClient.getMongoClientOptions().isSslInvalidHostNameAllowed(), is(equalTo(true)));
+        assertThat(
+                "should be configured with ssl",
+                localClient.getSettings().getSslSettings().isEnabled(),
+                is(equalTo(false)));
+        assertThat(
+                "should be configured with ssl",
+                localClient.getSettings().getSslSettings().isInvalidHostNameAllowed(),
+                is(equalTo(true)));
     }
 }

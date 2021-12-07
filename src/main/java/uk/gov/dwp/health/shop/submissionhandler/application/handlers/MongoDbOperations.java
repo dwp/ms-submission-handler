@@ -1,17 +1,18 @@
 package uk.gov.dwp.health.shop.submissionhandler.application.handlers;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientURI;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
+import org.bson.Document;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration;
 import uk.gov.dwp.health.shop.submissionhandler.application.items.interfaces.Payload;
-import org.bson.Document;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 
@@ -44,13 +45,19 @@ public class MongoDbOperations {
       }
     }
 
-    MongoClientOptions.Builder optionsBuilder =
-        MongoClientOptions.builder()
-            .sslEnabled(sslEnabled)
-            .sslInvalidHostNameAllowed(configuration.isMongoSslInvalidHostNameAllowed());
-    MongoClientURI mongoClientURI =
-        new MongoClientURI(configuration.getMongoDbUri().toString(), optionsBuilder);
-    return new MongoClient(mongoClientURI);
+    var mongoClientSettings =
+        MongoClientSettings.builder()
+            .applyToSslSettings(
+                builder -> {
+                  builder.enabled(sslEnabled);
+                  builder.invalidHostNameAllowed(
+                      configuration.isMongoSslInvalidHostNameAllowed());
+                })
+            .applyConnectionString(
+                new ConnectionString(configuration.getMongoDbUri().toString()))
+            .build();
+
+    return MongoClients.create(mongoClientSettings);
   }
 
   public void insertNewSubmissionRecord(

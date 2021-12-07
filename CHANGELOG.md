@@ -1,4 +1,9 @@
-#4.5.0 (20-10-2021)
+#4.6.0 (07-12-2021)
+
+* Updates validation in common-case-application-classes
+* Prepare ms-submission-handler for Mongo v5 upgrade
+
+##4.5.0 (20-10-2021)
 
 * initial open sourcing of ms-submission-handler
 * dependency / security updates

@@ -5,8 +5,9 @@ import com.amazonaws.services.sqs.model.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -62,7 +63,7 @@ public class CucumberStepDefs {
     private static final String TRUSTSTORE_FILE = "src/test/resources/submissions-handler-tls-server.ts";
     private static final String KEYSTORE_FILE = "src/test/resources/cucumber-test.ks";
 
-    private static final MongoClientURI MONGO_CLIENT_URI = new MongoClientURI("mongodb://mongo-db:9897");
+    private static final ConnectionString MONGO_CLIENT_URI = new ConnectionString("mongodb://mongo-db:9897");
     private static final String LOCALSTACK_CONTAINER_HOST = "http://localstack";
     private static final String MONGO_COLLECTION_NAME = "submissions";
     private static final String MONGO_DATABASE = "incomingData";
@@ -105,8 +106,9 @@ public class CucumberStepDefs {
         cryptoConfig.setKmsEndpointOverride(LOCALSTACK_CONTAINER_HOST + ":4599");
         awsKmsCryptoClass = new CryptoDataManager(cryptoConfig);
 
-        try (MongoClient mongoClient = new MongoClient(MONGO_CLIENT_URI)) {
-            mongoClient.dropDatabase(MONGO_DATABASE);
+        try (MongoClient mongoClient = MongoClients.create(MONGO_CLIENT_URI)) {
+            var mongoDatabase = mongoClient.getDatabase(MONGO_DATABASE);
+            mongoDatabase.drop();
         }
 
         LOG.info("configuring closable http client");
@@ -222,8 +224,8 @@ public class CucumberStepDefs {
     public void iReadTheMongoDatabaseAndThereIsASingleEntryWithReference(long count) {
         long recordCount;
 
-        try (MongoClient mongoClient = new MongoClient(MONGO_CLIENT_URI)) {
-            recordCount = mongoClient.getDatabase(MONGO_DATABASE).getCollection(MONGO_COLLECTION_NAME).count();
+        try (MongoClient mongoClient = MongoClients.create(MONGO_CLIENT_URI)) {
+            recordCount = mongoClient.getDatabase(MONGO_DATABASE).getCollection(MONGO_COLLECTION_NAME).countDocuments();
         }
 
         assertThat(String.format("should only be %d collections", count), recordCount, is(equalTo(count)));
@@ -237,7 +239,7 @@ public class CucumberStepDefs {
         BasicDBObject query = new BasicDBObject();
         query.put("ref", ref);
 
-        try (MongoClient mongoClient = new MongoClient(MONGO_CLIENT_URI)) {
+        try (MongoClient mongoClient = MongoClients.create(MONGO_CLIENT_URI)) {
             doc = mongoClient.getDatabase(MONGO_DATABASE).getCollection(MONGO_COLLECTION_NAME).find(query).first();
         }
 
@@ -256,7 +258,7 @@ public class CucumberStepDefs {
         BasicDBObject query = new BasicDBObject();
         query.put("ref", ref);
 
-        try (MongoClient mongoClient = new MongoClient(MONGO_CLIENT_URI)) {
+        try (MongoClient mongoClient = MongoClients.create(MONGO_CLIENT_URI)) {
             doc = mongoClient.getDatabase(MONGO_DATABASE).getCollection(MONGO_COLLECTION_NAME).find(query).first();
         }
 
