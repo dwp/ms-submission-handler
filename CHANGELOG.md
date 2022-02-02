@@ -1,4 +1,9 @@
-#4.6.0 (07-12-2021)
+#4.6.1 (02-02-2022)
+
+* Updates Jar packaging strategy
+* Updates Dropwizard
+
+##4.6.0 (07-12-2021)
 
 * Updates validation in common-case-application-classes
 * Prepare ms-submission-handler for Mongo v5 upgrade
