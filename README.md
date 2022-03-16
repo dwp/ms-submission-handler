@@ -16,11 +16,10 @@ to build the application and then running the application using
 
     java -jar <path-to-jar-file> server <path-to-config-yml>
         
-**encryption (message & mongo)**
+**encryption (message)**
 
-The service will use the `data-cryptography` and the `messaging-utility` dependencies to encrypt data for persistence to Mongo and for propagation to RabbitMQ respectively.  The relevant configuration items for this functionality are:-
+The service will use the `messaging-utility` dependencies to encrypt data for propagation to RabbitMQ.  The relevant configuration items for this functionality are:-
 
-    mongoCryptoConfiguration  
     mqCryptoConfiguration
         
 which are `uk.gov.dwp.health.crypto.CryptoConfig` classes and are built according to the specification detailed in the README for `data-cryptography` (https://gitlab.itsshared.net/health-pdu/shared/govuk-data-cryptography).
@@ -44,7 +43,7 @@ The incoming JSON object will be validated against a JSON schema document.  This
 `/submission`
 =
 
-This endpoint will deserialise the incoming JSON and validate the contents before encrypting the entire payload and pushing as a new object to a MongoDB collection.
+This endpoint will deserialise the incoming JSON and validate the contents before pushing it as a new object to a MongoDB collection.
 
     {
         "msg_id": "atw.submission.new", 
@@ -94,11 +93,11 @@ The collection format is:-
 * `encrypted_message` : The encrypted payload data (kms encrypted)
 * `hash` : the 'data key' returned back from KMS (along with the encrypted payload)
 
-eg. *Document{{_id=5a0308a93204210ff0ee21be, date_submitted=1487508391000, ref=aa123, encrypted_message=encrypted-serialised-object, hash=asdfghjkjhgfds1234567898765432}}*
+eg. *Document{{_id=5a0308a93204210ff0ee21be, date_submitted=1487508391000, ref=aa123}}*
     
 ### Return Status
 
-**Success** is returned when the payload is successfully validated, encrypted and saved to Mongo.
+**Success** is returned when the payload is successfully validated and saved to Mongo.
 
 * Invalid json input data or validation - `BAD_REQUEST (400)`
 * Exceptions during processing - `INTERNAL_SERVER_ERROR (500)`

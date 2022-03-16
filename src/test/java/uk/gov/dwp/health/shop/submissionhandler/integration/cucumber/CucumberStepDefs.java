@@ -250,7 +250,7 @@ public class CucumberStepDefs {
         assertThat(String.format("datesubmitted should equal %s", item.getDateSubmitted()), doc.get("date_submitted"), is(equalTo(item.getDateSubmittedInstant().toEpochMilli())));
     }
 
-    @And("^The decrypted mongo entry with ref \"([^\"]*)\" has matching contents to the original submitted item$")
+    @And("^The mongo entry with ref \"([^\"]*)\" has matching contents to the original submitted item$")
     public void theDecryptedMongoContentsHasMatchingContentsToTheOriginalSubmittedItem(String ref) throws IOException, CryptoException {
         AtwSubmissionItem queueItem = new ObjectMapper().readValue(queueMessage.getMessage(), AtwSubmissionItem.class);
         Document doc;
@@ -264,8 +264,10 @@ public class CucumberStepDefs {
 
         assertNotNull(doc);
 
-        EventMessage mongoObject = decryptContents(doc.get("encrypted_message").toString(), doc.get("hash").toString());
-        AtwSubmissionItem mongoItem = new ObjectMapper().readValue(mongoObject.serialisedBodyContentsToJson(), AtwSubmissionItem.class);
+        EventMessage messageObject = new EventMessage();
+        messageObject.setBodyContents(new ObjectMapper().readValue(doc.getString("message"), Object.class));
+
+        AtwSubmissionItem mongoItem = new ObjectMapper().readValue(messageObject.serialisedBodyContentsToJson(), AtwSubmissionItem.class);
 
         assertTrue(queueItem.isContentValid());
         assertTrue(mongoItem.isContentValid());
@@ -326,21 +328,6 @@ public class CucumberStepDefs {
         response = httpClient.execute(httpUriRequest);
         HttpEntity responseEntity = response.getEntity();
         payload = EntityUtils.toString(responseEntity);
-    }
-
-    private EventMessage decryptContents(String encryptedMessage, String dataKey) throws CryptoException, IOException {
-        CryptoDataManager cryptoDataManager = new CryptoDataManager(cryptoConfig);
-        LOG.info("Creating new CryptoMessage object for decryption");
-
-        CryptoMessage messageToDecrypt = new CryptoMessage();
-        messageToDecrypt.setMessage(encryptedMessage);
-        messageToDecrypt.setKey(dataKey);
-
-        LOG.info("Decrypting message...");
-        EventMessage messageObject = new EventMessage();
-        messageObject.setBodyContents(new ObjectMapper().readValue(cryptoDataManager.decrypt(messageToDecrypt), Object.class));
-
-        return messageObject;
     }
 
 }

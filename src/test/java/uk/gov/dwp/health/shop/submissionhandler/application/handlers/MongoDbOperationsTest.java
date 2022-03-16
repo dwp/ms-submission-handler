@@ -1,13 +1,13 @@
 package uk.gov.dwp.health.shop.submissionhandler.application.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.internal.MongoClientImpl;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.IMongodConfig;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
@@ -30,6 +30,7 @@ import java.net.URISyntaxException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -78,7 +79,11 @@ public class MongoDbOperationsTest {
 
         LOG.info("starting embedded mondodb instance");
         MongodStarter embeddedMongo = MongodStarter.getDefaultInstance();
-        IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION).net(new Net(mongoDbUri.getHost(), mongoDbUri.getPort(), Network.localhostIsIPv6())).build();
+        MongodConfig mongodConfig = MongodConfig.builder()
+            .version(Version.Main.PRODUCTION)
+            .net(new Net(mongoDbUri.getHost(), mongoDbUri.getPort(), Network.localhostIsIPv6()))
+            .build();
+
         mongodbExe = embeddedMongo.prepare(mongodConfig);
         mongodbExe.start();
     }
@@ -90,22 +95,20 @@ public class MongoDbOperationsTest {
 
     @Test
     public void testinsertobjectHttp() {
-        String testEncryptedMessage = "encrypted-serialised-object";
-        String testHash = "asdfghjkjhgfds1234567898765432";
+        String testMessage = "payload-message";
 
-        instance.insertNewSubmissionRecord(inputItem, testEncryptedMessage, testHash);
+        instance.insertNewSubmissionRecord(inputItem, testMessage);
         MongoDatabase db = instance.getMongoClient().getDatabase(configuration.getMongoDatabase());
         MongoCollection<Document> collection = db.getCollection(configuration.getMongoCollectionName());
 
-        assertThat("should only be one collection", collection.countDocuments(), is(equalTo(1L)));
+        assertThat("should only be one document", collection.countDocuments(), is(equalTo(1L)));
 
         Document doc = collection.find().first();
         LOG.info("resolved :: {}", doc);
 
         assertThat(String.format("ref should equal %s", inputItem.getRef()), doc.get("ref"), is(equalTo(inputItem.getRef())));
         assertThat(String.format("date_submitted should equal %s", inputItem.getDateSubmitted()), doc.get("date_submitted"), is(equalTo(inputItem.getDateSubmittedInstant().toEpochMilli())));
-        assertThat(String.format("message should be equal '%s'", testEncryptedMessage), doc.get("encrypted_message"), is(equalTo(testEncryptedMessage)));
-        assertThat(String.format("hash should equal '%s'", testHash), doc.get("hash"), is(equalTo(testHash)));
+        assertThat(String.format("message should be equal '%s'", testMessage), doc.get("message"), is(equalTo(testMessage)));
     }
 
     @Test
@@ -179,6 +182,29 @@ public class MongoDbOperationsTest {
         assertThat(
                 "should be configured with ssl",
                 localClient.getSettings().getSslSettings().isInvalidHostNameAllowed(),
+                is(equalTo(true)));
+    }
+
+    @Test
+    public void testStableApi() {
+        when(configuration.isMongoStableApiEnabled()).thenReturn(true);
+        when(configuration.getMongoStableApiVersion()).thenReturn(ServerApiVersion.V1);
+        when(configuration.isMongoStableApiStrict()).thenReturn(true);
+
+        MongoClientImpl localClient =
+                (MongoClientImpl) new MongoDbOperations(configuration).getMongoClient();
+
+        assertThat(
+                "should have stable api enabled",
+                localClient.getSettings().getServerApi(),
+                is(notNullValue()));
+        assertThat(
+                "should have api version set correctly",
+                localClient.getSettings().getServerApi().getVersion(),
+                is(equalTo(ServerApiVersion.V1)));
+        assertThat(
+                "should have strictness enabled",
+                localClient.getSettings().getServerApi().getStrict().orElse(false),
                 is(equalTo(true)));
     }
 }

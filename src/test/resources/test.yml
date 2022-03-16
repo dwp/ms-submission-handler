@@ -30,9 +30,8 @@ mongoDbSslKeystoreFilename: null
 mongoDbSslTruststorePassword: null
 mongoDbSslKeystorePassword: null
 
-mongoCryptoConfiguration:
-  kmsEndpointOverride: http://localstack:4599
-  dataKeyRequestId: alias/test_mongo_request_id
+mongoStableApiVersion: 1
+mongoStableApiStrict: true
 
 mqCryptoConfiguration:
   kmsEndpointOverride: http://localstack:4599

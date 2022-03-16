@@ -29,10 +29,8 @@ mongoDbSslTruststoreFilename: some/mongo/db/truststore.ts
 mongoDbSslKeystoreFilename: some/mongo/db/keystore.ks
 mongoDbSslTruststorePassword: password
 mongoDbSslKeystorePassword: password
-
-mongoCryptoConfiguration:
-  kmsEndpointOverride: http://localhost:5678
-  dataKeyRequestId: test_mongo_request_id
+mongoStableApiVersion: 1
+mongoStableApiStrict: true
 
 mqCryptoConfiguration:
   kmsEndpointOverride: http://localhost:5678

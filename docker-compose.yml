@@ -31,7 +31,7 @@ services:
         while nc -z localstack 4599; do echo "localstack still running, keeping cli container active."; sleep 30; done
 
   mongo-db:
-    image: mongo:3.6
+    image: mongo:5.0
     command: mongod --port 9897
     expose:
       - 9897

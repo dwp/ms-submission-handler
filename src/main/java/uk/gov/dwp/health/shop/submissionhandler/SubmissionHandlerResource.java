@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoException;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+
 import org.apache.http.HttpStatus;
 import org.everit.json.schema.ValidationException;
 import org.slf4j.Logger;
@@ -43,7 +45,6 @@ public class SubmissionHandlerResource {
 
   private JsonObjectSchemaValidation jsonObjectSchemaValidation;
   private SubmissionHandlerConfiguration configuration;
-  private CryptoDataManager mongoCryptoDataManager;
   private MongoDbOperations mongoDbOperations;
   private MessagePublisher snsPublisher;
 
@@ -51,10 +52,8 @@ public class SubmissionHandlerResource {
   public SubmissionHandlerResource(
       SubmissionHandlerConfiguration configuration,
       JsonObjectSchemaValidation schemaValidation,
-      CryptoDataManager mongoCryptoDataManager,
       MongoDbOperations dbOperations,
       MessagePublisher messagePublisher) {
-    this.mongoCryptoDataManager = mongoCryptoDataManager;
     this.jsonObjectSchemaValidation = schemaValidation;
     this.mongoDbOperations = dbOperations;
     this.snsPublisher = messagePublisher;
@@ -100,11 +99,7 @@ public class SubmissionHandlerResource {
       if (incomingStructure.isContentValid()) {
         LOG.info("incoming structure successfully validated");
 
-        CryptoMessage encryptedObject = mongoCryptoDataManager.encrypt(payload);
-        LOG.info("payload successfully encrypted");
-
-        mongoDbOperations.insertNewSubmissionRecord(
-            incomingStructure, encryptedObject.getMessage(), encryptedObject.getKey());
+        mongoDbOperations.insertNewSubmissionRecord(incomingStructure, payload);
         LOG.info("object successfully persisted in mongodb instance");
 
         LOG.debug("created event message object");

@@ -18,4 +18,11 @@
         <notes><![CDATA[file name: jakarta.el-3.0.3.jar]]></notes>
         <cve>CVE-2021-28170</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+      file name: bc-fips-1.0.2.jar - until a fix is available this is the latest version
+      ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bc\-fips@.*$</packageUrl>
+        <cpe>cpe:/a:bouncycastle:legion-of-the-bouncy-castle</cpe>
+    </suppress>
 </suppressions>

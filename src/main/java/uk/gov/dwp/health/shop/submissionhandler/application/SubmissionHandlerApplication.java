@@ -40,8 +40,6 @@ public class SubmissionHandlerApplication extends Application<SubmissionHandlerC
 
     final CryptoDataManager mqCryptoDataManager =
         new CryptoDataManager(configuration.getMQCryptoConfig());
-    final CryptoDataManager mongoCryptoDataManager =
-        new CryptoDataManager(configuration.getMongoCryptoConfig());
 
     final MessageEncoder<MessageAttributeValue> mqMessageEncoder =
         new MessageEncoder<>(mqCryptoDataManager, MessageAttributeValue.class);
@@ -54,7 +52,6 @@ public class SubmissionHandlerApplication extends Application<SubmissionHandlerC
         new SubmissionHandlerResource(
             configuration,
             schemaValidation,
-            mongoCryptoDataManager,
             mongoDbOperations,
             messagePublisher);
 

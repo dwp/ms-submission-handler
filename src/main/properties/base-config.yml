@@ -15,10 +15,8 @@ mongoDbSslTruststoreFilename: null
 mongoDbSslKeystoreFilename: null
 mongoDbSslTruststorePassword: null
 mongoDbSslKeystorePassword: null
-
-mongoCryptoConfiguration:
-  kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}
-  dataKeyRequestId: ${MONGO_CRYPTO_KEY_ALIAS}
+mongoStableApiVersion: ${MONGO_STABLE_API_VERSION:-null}
+mongoStableApiStrict: ${MONGO_STABLE_API_STRICT:-true}
 
 mqCryptoConfiguration:
   kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}

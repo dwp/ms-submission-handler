@@ -1,6 +1,7 @@
 package uk.gov.dwp.health.shop.submissionhandler.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.ServerApiVersion;
 import uk.gov.dwp.health.messageq.amazon.items.AmazonConfigBase;
 import uk.gov.dwp.health.shop.submissionhandler.application.items.config.SubmissionConfigurationItem;
 import io.dropwizard.Configuration;
@@ -43,9 +44,11 @@ public class SubmissionHandlerConfiguration extends Configuration {
   @JsonProperty("mongoDbSslKeystorePassword")
   private SealedObject mongoDbSslKeystorePassword;
 
-  @NotNull
-  @JsonProperty("mongoCryptoConfiguration")
-  private CryptoConfig mongoCryptoConfig;
+  @JsonProperty("mongoStableApiVersion")
+  private String mongoStableApiVersion;
+
+  @JsonProperty("mongoStableApiStrict")
+  private boolean mongoStableApiStrict = true;
 
   @NotNull
   @JsonProperty("mqCryptoConfiguration")
@@ -109,8 +112,20 @@ public class SubmissionHandlerConfiguration extends Configuration {
     return mongoDbUri;
   }
 
-  public CryptoConfig getMongoCryptoConfig() {
-    return mongoCryptoConfig;
+  public boolean isMongoStableApiEnabled() {
+    return mongoStableApiVersion != null;
+  }
+
+  public ServerApiVersion getMongoStableApiVersion() {
+    if (isMongoStableApiEnabled()) {
+      return ServerApiVersion.findByValue(mongoStableApiVersion);
+    } else {
+      return null;
+    }
+  }
+
+  public boolean isMongoStableApiStrict() {
+    return mongoStableApiStrict;
   }
 
   public CryptoConfig getMQCryptoConfig() {

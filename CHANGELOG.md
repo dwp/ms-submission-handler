@@ -1,3 +1,7 @@
+#4.7.0 (10-03-2022)
+
+* Update database compatibility from mongo v4 to mongo v5
+
 #4.6.1 (02-02-2022)
 
 * Updates Jar packaging strategy

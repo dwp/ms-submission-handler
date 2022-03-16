@@ -2,6 +2,7 @@ package uk.gov.dwp.health.shop.submissionhandler;
 
 import com.amazonaws.util.Base64;
 import com.google.common.collect.ImmutableMap;
+import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteError;
@@ -77,9 +78,6 @@ public class SubmissionHandlerResourceTest {
     private MessagePublisher mqPublisher;
 
     @Mock
-    private CryptoDataManager cryptoDataManager;
-
-    @Mock
     private SubmissionConfigurationItem submissionConfigurationItem;
 
     @Captor
@@ -104,13 +102,11 @@ public class SubmissionHandlerResourceTest {
         encryptedObject.setMessage("encrypted_version_of_the_payload");
         encryptedObject.setKey(Base64.encodeAsString("a key".getBytes()));
 
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenReturn(encryptedObject);
         when(configuration.isSnsEncryptMessages()).thenReturn(true);
 
         SubmissionHandlerResource instance = new SubmissionHandlerResource(
                 configuration,
                 schemaValidation,
-                cryptoDataManager,
                 mongoDbOperations,
                 mqPublisher
         );
@@ -119,8 +115,7 @@ public class SubmissionHandlerResourceTest {
         UUID correlationId = UUID.fromString(response.getEntity().toString());
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(encryptedObject.getMessage()), eq(encryptedObject.getKey()));
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
         verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
@@ -135,14 +130,12 @@ public class SubmissionHandlerResourceTest {
         SubmissionHandlerResource instance = new SubmissionHandlerResource(
                 configuration,
                 schemaValidation,
-                cryptoDataManager,
                 mongoDbOperations,
                 mqPublisher
         );
         Response response = instance.mainApplicationPOST(UNKNOWN_MSG_ID);
 
         verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(cryptoDataManager);
         verifyZeroInteractions(mongoDbOperations);
         verifyZeroInteractions(mqPublisher);
 
@@ -151,18 +144,12 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void validPayloadReferralProcessedCorrectlyWithEncryptedSns200() throws CryptoException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, EventsMessageException, InvocationTargetException {
-        CryptoMessage encryptedObject = new CryptoMessage();
-        encryptedObject.setMessage("encrypted_version_of_the_payload");
-        encryptedObject.setKey(Base64.encodeAsString("a key".getBytes()));
-
         when(submissionConfigurationItem.getJsonSchemaValidationDoc()).thenReturn(REFERAL_SCHEMA);
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenReturn(encryptedObject);
         when(configuration.isSnsEncryptMessages()).thenReturn(true);
 
         SubmissionHandlerResource instance = new SubmissionHandlerResource(
                 configuration,
                 schemaValidation,
-                cryptoDataManager,
                 mongoDbOperations,
                 mqPublisher
         );
@@ -171,8 +158,7 @@ public class SubmissionHandlerResourceTest {
         UUID correlationId = UUID.fromString(response.getEntity().toString());
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(REFERAL_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(encryptedObject.getMessage()), eq(encryptedObject.getKey()));
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
         verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
@@ -184,16 +170,9 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void validPayloadProcessedCorrectlyWithPlaintextSns200() throws CryptoException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, EventsMessageException, InvocationTargetException {
-        CryptoMessage encryptedObject = new CryptoMessage();
-        encryptedObject.setMessage("encrypted_version_of_the_payload");
-        encryptedObject.setKey(Base64.encodeAsString("a key".getBytes()));
-
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenReturn(encryptedObject);
-
         SubmissionHandlerResource instance = new SubmissionHandlerResource(
                 configuration,
                 schemaValidation,
-                cryptoDataManager,
                 mongoDbOperations,
                 mqPublisher
         );
@@ -202,8 +181,7 @@ public class SubmissionHandlerResourceTest {
         UUID correlationId = UUID.fromString(response.getEntity().toString());
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(encryptedObject.getMessage()), eq(encryptedObject.getKey()));
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
         verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
@@ -214,36 +192,31 @@ public class SubmissionHandlerResourceTest {
     }
 
     @Test
-    public void validPayloadCryptoThrowsExceptionToGet500() throws CryptoException, IOException {
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenThrow(new CryptoException("I am an exception!"));
+    public void validPayloadCryptoThrowsExceptionToGet500() throws CryptoException, IOException, EventsMessageException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        doThrow(new CryptoException("I am an exception!"))
+            .when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
 
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
     }
 
     @Test
-    public void validPayloadMongoDbThrowsExceptionToGet500() throws CryptoException, IOException {
-        CryptoMessage encryptedObject = new CryptoMessage();
-        encryptedObject.setMessage("encrypted_version_of_the_payload");
-        encryptedObject.setKey(Base64.encodeAsString("a key".getBytes()));
+    public void validPayloadMongoDbThrowsExceptionToGet500() throws IOException {
+        doThrow(new MongoWriteException(new WriteError(987, "error!", new BsonDocument()), new ServerAddress("mockhost:123")))
+            .when(mongoDbOperations).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
 
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenReturn(encryptedObject);
-        doThrow(new MongoWriteException(new WriteError(987, "error!", new BsonDocument()), new ServerAddress("mockhost:123"))).when(mongoDbOperations).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(encryptedObject.getMessage()), eq(encryptedObject.getKey()));
-
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString(), anyString());
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString());
         verifyZeroInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
@@ -252,19 +225,13 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void validPayloadSnsMqThrowsExceptionToGet500() throws CryptoException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, EventsMessageException, InvocationTargetException {
-        CryptoMessage encryptedObject = new CryptoMessage();
-        encryptedObject.setMessage("encrypted_version_of_the_payload");
-        encryptedObject.setKey(Base64.encodeAsString("a key".getBytes()));
-
-        when(cryptoDataManager.encrypt(VALID_JSON)).thenReturn(encryptedObject);
         doThrow(new EventsMessageException("mocked exception thrown!")).when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
 
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verify(cryptoDataManager, times(1)).encrypt(eq(VALID_JSON));
-        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString(), anyString());
+        verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString());
         verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
@@ -273,11 +240,10 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void validPayloadWithInvalidContentsThrowsExceptionToGet500() throws IOException {
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(INVALID_JSON_CONTENTS);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(INVALID_JSON_CONTENTS), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verifyZeroInteractions(cryptoDataManager);
         verifyZeroInteractions(mongoDbOperations);
         verifyZeroInteractions(mqPublisher);
 
@@ -287,11 +253,10 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void invalidPayloadThrowsExceptionToGet500() {
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST("{\"not_a_configured_node\" : \"this should fail\"}");
 
         verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(cryptoDataManager);
         verifyZeroInteractions(mongoDbOperations);
         verifyZeroInteractions(mqPublisher);
 
@@ -301,11 +266,10 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void brokenPayloadThrowsExceptionToGet500() {
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST("{\"not_a_configured_node : \"missing_quotation\"}");
 
         verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(cryptoDataManager);
         verifyZeroInteractions(mongoDbOperations);
         verifyZeroInteractions(mqPublisher);
 
@@ -318,11 +282,10 @@ public class SubmissionHandlerResourceTest {
     public void invalidSchemaValidationThrowsExceptionToGet500() throws IOException {
         doThrow(new ValidationException("I know this implementation is deprecated but I'm just proving the exception")).when(schemaValidation).validateJsonDocumentWithFile(VALID_JSON, SCHEMA_SERIALISATION_ENTRY, ATW_SCHEMA);
 
-        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, cryptoDataManager, mongoDbOperations, mqPublisher);
+        SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verifyZeroInteractions(cryptoDataManager);
         verifyZeroInteractions(mongoDbOperations);
         verifyZeroInteractions(mqPublisher);
 

@@ -2,6 +2,7 @@ package uk.gov.dwp.health.shop.submissionhandler.application.handlers;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerApi;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -45,23 +46,29 @@ public class MongoDbOperations {
       }
     }
 
-    var mongoClientSettings =
-        MongoClientSettings.builder()
-            .applyToSslSettings(
-                builder -> {
-                  builder.enabled(sslEnabled);
-                  builder.invalidHostNameAllowed(
-                      configuration.isMongoSslInvalidHostNameAllowed());
-                })
-            .applyConnectionString(
-                new ConnectionString(configuration.getMongoDbUri().toString()))
-            .build();
+    var mongoClientSettings = MongoClientSettings.builder()
+        .applyToSslSettings(
+            builder -> {
+              builder.enabled(sslEnabled);
+              builder.invalidHostNameAllowed(
+                  configuration.isMongoSslInvalidHostNameAllowed());
+            })
+        .applyConnectionString(
+            new ConnectionString(configuration.getMongoDbUri().toString()));
 
-    return MongoClients.create(mongoClientSettings);
+    if (configuration.isMongoStableApiEnabled()) {
+      mongoClientSettings.serverApi(ServerApi.builder()
+          .strict(configuration.isMongoStableApiStrict())
+          .version(configuration.getMongoStableApiVersion())
+          .build());
+    }
+
+
+    return MongoClients.create(mongoClientSettings.build());
   }
 
   public void insertNewSubmissionRecord(
-      Payload itemToSave, String encryptedObject, String encryptedKey) {
+      Payload itemToSave, String message) {
 
     LOG.debug(
         "create connection to {} and attach to database {}",
@@ -80,8 +87,7 @@ public class MongoDbOperations {
     Document document = new Document();
     document.append("date_submitted", itemToSave.getDateSubmittedInstant().toEpochMilli());
     document.append("ref", itemToSave.getRef());
-    document.append("encrypted_message", encryptedObject);
-    document.append("hash", encryptedKey);
+    document.append("message", message);
 
     LOG.debug("Inserting record to collection");
     submissionsCollection.insertOne(document);

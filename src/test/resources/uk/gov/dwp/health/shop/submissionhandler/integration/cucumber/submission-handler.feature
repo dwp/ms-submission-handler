@@ -116,7 +116,7 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "asa123"
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "asa123" and the original submitted time
-    And The decrypted mongo entry with ref "asa123" has matching contents to the original submitted item
+    And The mongo entry with ref "asa123" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with valid NEW STYLE ESA content and it is a SUCCESS!
     Given I create an sns topic named "sub-handler-topic"
@@ -130,7 +130,7 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "2PJE5M"
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "2PJE5M" and the original submitted time
-    And The decrypted mongo entry with ref "2PJE5M" has matching contents to the original submitted item
+    And The mongo entry with ref "2PJE5M" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with valid NEW STYLE ESA with submitted in the future is a FAILURE!
     Given I create an sns topic named "sub-handler-topic"
@@ -149,7 +149,7 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "2PJE5M"
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "2PJE5M" and the original submitted time
-    And The decrypted mongo entry with ref "2PJE5M" has matching contents to the original submitted item
+    And The mongo entry with ref "2PJE5M" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with valid ACCESS TO WORK with submitted is 6 days in the future is a FAILURE!
     Given I create an sns topic named "sub-handler-topic"
@@ -177,7 +177,7 @@ Feature: test the main functionality of the application
       | "relationship"    |
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "aaa1234" and the original submitted time
-    And The decrypted mongo entry with ref "aaa1234" has matching contents to the original submitted item
+    And The mongo entry with ref "aaa1234" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with allowable optional fields - where at least one must be present, rep & contact - and it is a FAILURE
     Given I create an sns topic named "sub-handler-topic"
@@ -212,7 +212,7 @@ Feature: test the main functionality of the application
       | "representative" |
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "abc123" and the original submitted time
-    And The decrypted mongo entry with ref "abc123" has matching contents to the original submitted item
+    And The mongo entry with ref "abc123" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with allowable missing - contact_option - and it is a SUCCESS with the serialised blank content removed!
     Given I create an sns topic named "sub-handler-topic"
@@ -234,7 +234,7 @@ Feature: test the main functionality of the application
       | "contact_option" |
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "bbb321" and the original submitted time
-    And The decrypted mongo entry with ref "bbb321" has matching contents to the original submitted item
+    And The mongo entry with ref "bbb321" has matching contents to the original submitted item
 
   Scenario: POST request to correct endpoint with more missing contents - tags - and it is a FAILURE
     Given I create an sns topic named "sub-handler-topic"
@@ -268,7 +268,7 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "aaa1234"
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "aaa1234" and the original submitted time
-    And The decrypted mongo entry with ref "aaa1234" has matching contents to the original submitted item
+    And The mongo entry with ref "aaa1234" has matching contents to the original submitted item
     When I hit the service url "https://localhost:9044/submission" with the following json body
       | msg_id | "access-to-work.submission.new" |
       | ref | "aaa1234" |
@@ -298,7 +298,7 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "aaa1234"
     Then I read the mongo database and there are 1 entries
     And There is an entry containing the reference "aaa1234" and the original submitted time
-    And The decrypted mongo entry with ref "aaa1234" has matching contents to the original submitted item
+    And The mongo entry with ref "aaa1234" has matching contents to the original submitted item
     When I hit the service url "https://localhost:9044/submission" with the following json body
       | msg_id | "access-to-work.submission.new" |
       | ref | "aab1234" |
@@ -314,4 +314,4 @@ Feature: test the main functionality of the application
     And The message body content is an AtwSubmissionItem with reference "aab1234"
     Then I read the mongo database and there are 2 entries
     And There is an entry containing the reference "aab1234" and the original submitted time
-    And The decrypted mongo entry with ref "aab1234" has matching contents to the original submitted item
+    And The mongo entry with ref "aab1234" has matching contents to the original submitted item
