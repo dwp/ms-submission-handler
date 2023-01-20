@@ -7,5 +7,6 @@
 <suppressions>
   <suppress checks="CustomImportOrder" files=".*"/>
   <suppress checks="JavadocMethod" files=".*"/>
+  <suppress checks="JavadocType" files=".*" />
   <suppress checks="AbbreviationAsWordInName" files=".*"/>
 </suppressions>

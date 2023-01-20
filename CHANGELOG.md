@@ -1,3 +1,8 @@
+#4.8.0 (19-01-2023)
+
+* Add reason no ssp
+* Update dockerfile user
+
 #4.7.0 (10-03-2022)
 
 * Update database compatibility from mongo v4 to mongo v5

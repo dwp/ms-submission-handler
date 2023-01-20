@@ -5,47 +5,46 @@
 
     <groupId>uk.gov.dwp.health</groupId>
     <artifactId>ms-submission-handler</artifactId>
-    <version>4.7.0</version>
+    <version>4.8.0</version>
 
     <properties>
         <dwp.message-utility.version>2.3.0-5de751dd</dwp.message-utility.version>
         <dwp.secure-sockets.version>1.6.2</dwp.secure-sockets.version>
         <dwp.securestrings.version>1.5.1</dwp.securestrings.version>
         <dwp.json-schema.version>1.4.0</dwp.json-schema.version>
-        <dwp.encoded-log.version>2.0.3</dwp.encoded-log.version>
+        <dwp.encoded-log.version>2.0.5</dwp.encoded-log.version>
         <dwp.postcode.version>1.1.0</dwp.postcode.version>
-        <common-esa.version>0.11.0-9bafe0d9</common-esa.version>
-        <plugin.springboot.shade.version>2.6.2</plugin.springboot.shade.version>
+        <common-esa.version>0.12.0-4c781c01</common-esa.version>
+        <plugin.springboot.shade.version>2.6.5</plugin.springboot.shade.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javax.activation.version>1.1.1</javax.activation.version>
-        <google.guava.version>24.1.1-jre</google.guava.version>
         <cucumber-core.version>1.2.4</cucumber-core.version>
-        <jackson-data.version>2.12.1</jackson-data.version>
-        <cucumber-jvm.version>1.0.3</cucumber-jvm.version>
-        <jetty.version>9.4.43.v20210629</jetty.version>
-        <dropwizard.version>2.0.28</dropwizard.version>
-        <commons-io.version>1.3.2</commons-io.version>
-        <flapdoodle.version>3.2.7</flapdoodle.version>
-        <wiremock.version>2.6.0</wiremock.version>
+        <jackson-databind.version>2.14.0</jackson-databind.version>
+        <jackson-dataformat.version>2.13.2</jackson-dataformat.version>
+        <cucumber-jvm.version>1.0.5</cucumber-jvm.version>
+        <dropwizard.version>2.1.4</dropwizard.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <flapdoodle.version>3.4.3</flapdoodle.version>
+        <wiremock.version>2.27.2</wiremock.version>
         <mockito.version>1.10.19</mockito.version>
         <mongo-driver.version>4.4.1</mongo-driver.version>
-        <owasp.version>6.1.6</owasp.version>
-        <junit.version>4.11</junit.version>
-        <jaxb.version>2.3.0</jaxb.version>
-        <snakeyml.version>1.26</snakeyml.version>
+        <owasp.version>7.4.4</owasp.version>
+        <junit.version>4.13.2</junit.version>
+        <snakeyml.version>1.33</snakeyml.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
         <plugin.spotbugs.version>4.0.0</plugin.spotbugs.version>
-        <plugin.surefire.version>2.22.0</plugin.surefire.version>
-        <plugin.jacoco.version>0.8.5</plugin.jacoco.version>
+        <plugin.surefire.version>2.22.2</plugin.surefire.version>
+        <plugin.jacoco.version>0.8.7</plugin.jacoco.version>
         <plugin.projectinfo.version>2.4</plugin.projectinfo.version>
-        <doxia.version>1.8</doxia.version>
+        <doxia.version>1.11.1</doxia.version>
         <plugin.jxr.version>2.5</plugin.jxr.version>
         <plugin.site.version>3.7.1</plugin.site.version>
         <localstack.version>0.1.15</localstack.version>
         <plugin.pmd.version>3.10.0</plugin.pmd.version>
-        <aws.sqs.version>1.11.458</aws.sqs.version>
-        <aws.sns.version>1.11.458</aws.sns.version>
+        <aws.sqs.version>1.12.349</aws.sqs.version>
+        <aws.sns.version>1.12.349</aws.sns.version>
+        <bc-flips.version>1.0.2.3</bc-flips.version>
+        <aws-java-sdk.version>1.12.349</aws-java-sdk.version>
         <build.commit-ref>${env.CI_COMMIT_SHORT_SHA}</build.commit-ref>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
     </properties>
@@ -59,7 +58,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-cbor</artifactId>
-            <version>${jackson-data.version}</version>
+            <version>${jackson-dataformat.version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -79,62 +78,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson-data.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${google.guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>${jaxb.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>${jaxb.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>${javax.activation.version}</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>uk.gov.dwp.logging</groupId>
             <artifactId>encoded-logger-output</artifactId>
             <version>${dwp.encoded-log.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-security</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -152,16 +101,6 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish.web</groupId>
-                    <artifactId>javax.el</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.el</groupId>
-                    <artifactId>javax.el-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
@@ -193,6 +132,16 @@
             <groupId>uk.gov.dwp.health.messageq</groupId>
             <artifactId>messaging-utility</artifactId>
             <version>${dwp.message-utility.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bc-fips</artifactId>
+            <version>${bc-flips.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${aws-java-sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
