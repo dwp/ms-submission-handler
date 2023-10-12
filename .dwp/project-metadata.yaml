@@ -1,0 +1,19 @@
+$schema: https://gitlab.com/dwp/secure-development/schema/project-metadata/-/raw/v1.0.0/schema/project-metadata.json
+
+schema_version: 1.0.0
+
+project:
+  - project_id: 26961517
+    component_name: ms-submission-handler
+
+    version: 4.9.0
+
+    last_verified:
+      date: "2023-10-11"
+      name: "@lewis.jones1"
+
+    tags:
+      payments: false
+      personally_identifying_information: false
+
+    cmdb_id: 27cfe686dbcbdb00af6b5401ce961975

@@ -38,8 +38,11 @@ import uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionI
 import uk.gov.dwp.tls.TLSConnectionBuilder;
 import uk.gov.dwp.tls.TLSGeneralException;
 
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -78,7 +81,7 @@ public class CucumberStepDefs {
     private String payload;
 
     @Before
-    public void setup() throws CryptoException, IOException, CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, TLSGeneralException {
+    public void setup() throws CryptoException, IOException, CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, TLSGeneralException, IllegalBlockSizeException, NoSuchPaddingException, InvalidKeyException {
 
         // create local properties to negate KMS & LocalStack from needing to access Metadata Service for IAM role privs
         System.setProperty("aws.accessKeyId", "this_is_my_system_property_key");

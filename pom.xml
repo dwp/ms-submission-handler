@@ -5,29 +5,29 @@
 
     <groupId>uk.gov.dwp.health</groupId>
     <artifactId>ms-submission-handler</artifactId>
-    <version>4.8.0</version>
+    <version>4.9.0</version>
 
     <properties>
-        <dwp.message-utility.version>2.3.0-5de751dd</dwp.message-utility.version>
-        <dwp.secure-sockets.version>1.6.2</dwp.secure-sockets.version>
-        <dwp.securestrings.version>1.5.1</dwp.securestrings.version>
-        <dwp.json-schema.version>1.4.0</dwp.json-schema.version>
-        <dwp.encoded-log.version>2.0.5</dwp.encoded-log.version>
+        <dwp.message-utility.version>4.0.0-5bc46d5a</dwp.message-utility.version>
+        <dwp.secure-sockets.version>1.9.0-fd63f993</dwp.secure-sockets.version>
+        <dwp.securestrings.version>1.7.0-7d6dd346</dwp.securestrings.version>
+        <dwp.json-schema.version>1.6.0-aafedb62</dwp.json-schema.version>
+        <dwp.encoded-log.version>2.3.0-c5d6b343</dwp.encoded-log.version>
         <dwp.postcode.version>1.1.0</dwp.postcode.version>
-        <common-esa.version>0.12.0-4c781c01</common-esa.version>
+        <common-esa.version>0.12.1-552014dc</common-esa.version>
         <plugin.springboot.shade.version>2.6.5</plugin.springboot.shade.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumber-core.version>1.2.4</cucumber-core.version>
         <jackson-databind.version>2.14.0</jackson-databind.version>
         <jackson-dataformat.version>2.13.2</jackson-dataformat.version>
         <cucumber-jvm.version>1.0.5</cucumber-jvm.version>
-        <dropwizard.version>2.1.4</dropwizard.version>
+        <dropwizard.version>2.1.8</dropwizard.version>
         <commons-io.version>2.11.0</commons-io.version>
         <flapdoodle.version>3.4.3</flapdoodle.version>
         <wiremock.version>2.27.2</wiremock.version>
         <mockito.version>1.10.19</mockito.version>
         <mongo-driver.version>4.4.1</mongo-driver.version>
-        <owasp.version>7.4.4</owasp.version>
+        <owasp.version>8.2.1</owasp.version>
         <junit.version>4.13.2</junit.version>
         <snakeyml.version>1.33</snakeyml.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -157,6 +157,12 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
             <version>${dropwizard.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit-jupiter</artifactId>
+                    <groupId>org.junit.jupiter</groupId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
         <dependency>

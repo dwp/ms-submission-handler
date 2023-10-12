@@ -51,6 +51,11 @@ snsConfiguration:
 applicationInfoEnabled: true
 
 submissionServices:
+    access-to-work.submission.apply:
+      serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+      snsEventRoutingKey: incoming.submission.atw.apply
+      schemaDocReference: submissionAtwApply
+      jsonSchemaValidationDoc: src/main/resources/atw.SubmissionItem.JsonSchemaDoc.json
     access-to-work.submission.new:
       serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
       snsEventRoutingKey: incoming.submission.atw

@@ -8,13 +8,18 @@ import io.dropwizard.Configuration;
 import uk.gov.dwp.crypto.SecureStrings;
 import uk.gov.dwp.health.crypto.CryptoConfig;
 
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.net.URI;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public class SubmissionHandlerConfiguration extends Configuration {
-  private SecureStrings cipher = new SecureStrings();
+  private final SecureStrings cipher;
 
   @NotNull
   @JsonProperty("mongoDbUri")
@@ -76,6 +81,11 @@ public class SubmissionHandlerConfiguration extends Configuration {
   @JsonProperty("submissionServices")
   private Map<String, SubmissionConfigurationItem> submissionServices;
 
+  public SubmissionHandlerConfiguration() throws
+      NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    cipher = new SecureStrings();
+  }
+
   public String getMongoDbSslTruststoreFilename() {
     return mongoDbSslTruststoreFilename;
   }
@@ -88,7 +98,8 @@ public class SubmissionHandlerConfiguration extends Configuration {
     return cipher.revealString(mongoDbSslTruststorePassword);
   }
 
-  public void setMongoDbSslTruststorePassword(String mongoDbSslTruststorePassword) {
+  public void setMongoDbSslTruststorePassword(String mongoDbSslTruststorePassword) throws
+      IllegalBlockSizeException, IOException {
     this.mongoDbSslTruststorePassword = cipher.sealString(mongoDbSslTruststorePassword);
   }
 
@@ -96,7 +107,8 @@ public class SubmissionHandlerConfiguration extends Configuration {
     return cipher.revealString(mongoDbSslKeystorePassword);
   }
 
-  public void setMongoDbSslKeystorePassword(String mongoDbSslKeystorePassword) {
+  public void setMongoDbSslKeystorePassword(String mongoDbSslKeystorePassword) throws
+      IllegalBlockSizeException, IOException {
     this.mongoDbSslKeystorePassword = cipher.sealString(mongoDbSslKeystorePassword);
   }
 

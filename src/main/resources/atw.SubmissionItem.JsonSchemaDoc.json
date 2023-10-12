@@ -168,5 +168,174 @@
       "500": "",
       "400": ""
     }
+  },
+  "submissionAtwApply": {
+    "request": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "msg_id",
+        "ref",
+        "date_submitted",
+        "applicant",
+        "data_capture",
+        "declaration"
+      ],
+      "type": "object",
+      "properties": {
+        "declaration": {
+          "type": "string",
+          "description": "A copy of the declaration that has been agree to by the Customer at the time of submitting this application"
+        },
+        "data_capture": {
+          "type": "object",
+          "description": "A free form object that contains all benefit-specific data that was captured from the customer. This is stored and retrieved exactly as provided here."
+        },
+        "tags": {
+          "items": {
+            "required": [
+              "name",
+              "value"
+            ],
+            "type": "object",
+            "description": "General purpose method for tagging items with custom key=>value metadata",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "type": "array"
+        },
+        "ref": {
+          "type": "string",
+          "description": "The case reference number automatically generated and passed in to the api"
+        },
+        "applicant": {
+          "required": [
+            "forenames",
+            "surname",
+            "dob",
+            "residence_address"
+          ],
+          "type": "object",
+          "properties": {
+            "residence_address": {
+              "required": [
+                "lines",
+                "postcode"
+              ],
+              "type": "object",
+              "properties": {
+                "premises": {
+                  "type": "string"
+                },
+                "lines": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "postcode": {
+                  "type": "string"
+                }
+              }
+            },
+            "surname": {
+              "type": "string",
+              "description": "the claimant surname can't be null or blank"
+            },
+            "representative": {
+              "required": [
+                "full_name",
+                "relationship",
+                "tel"
+              ],
+              "type": "object",
+              "description": "This Customer's representative",
+              "properties": {
+                "tel": {
+                  "type": "string",
+                  "description": "will fail validation if null or empty"
+                },
+                "relationship": {
+                  "type": "string",
+                  "description": "The relationship held between this person and the Customer.  will fail validation if null or empy"
+                },
+                "full_name": {
+                  "type": "string",
+                  "description": "Full name of the rep.  will fail validation if null or empty"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "this is an optional field and can be null or blank"
+                }
+              }
+            },
+            "forenames": {
+              "type": "string",
+              "description": "will fail validation if null or empty"
+            },
+            "dob": {
+              "type": "string",
+              "description": "will fail validation if null, empty or is in the future.  format is yyyy-MM-dd",
+              "format": "date"
+            },
+            "contact_options": {
+              "items": {
+                "required": [
+                  "method",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "description": "Details about the contact method, e.g. postal address, telephone numbers, etc"
+                  },
+                  "method": {
+                    "default": "tel",
+                    "enum": [
+                      "email",
+                      "tel",
+                      "telmobile",
+                      "postal"
+                    ],
+                    "type": "string",
+                    "description": "Contact method, e.g. tel, email, post, etc.  will fail vaidation if null, empty or does not carry one of the enum values"
+                  },
+                  "preferred": {
+                    "default": false,
+                    "type": "boolean",
+                    "description": "Whether this is the person's preferred method of contact"
+                  }
+                }
+              },
+              "type": "array"
+            }
+          }
+        },
+        "date_submitted": {
+          "type": "string",
+          "description": "The date this application should be considered \"submitted\". May not match current time (e.g. in the case of IDOC - Initial Date of Contact)",
+          "format": "date-time"
+        },
+        "msg_id": {
+          "type": "string",
+          "description": "determine how to validate and route the data"
+        }
+      }
+    },
+    "_meta": {
+      "path": "/submission",
+      "method": "post"
+    },
+    "responses": {
+      "200": "",
+      "500": "",
+      "400": ""
+    }
   }
 }

@@ -26,11 +26,16 @@ snsTopicName: ${SNS_TOPIC_NAME}
 snsSubject: ${SNS_SUBJECT}
 snsEncryptMessages: ${SNS_ENCRYPT_MESSAGES:-true}
 
-snsConfiguration: 
+snsConfiguration:
   endpointOverride: ${SNS_ENDPOINT_OVERRIDE:-null}
   region: ${SNS_CONFIG_REGION:-eu-west-2}
 
 submissionServices:
+  access-to-work.submission.apply:
+    serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
+    snsEventRoutingKey: ${ATW_APPLY_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.atw.apply}
+    schemaDocReference: submissionAtwApply
+    jsonSchemaValidationDoc: /opt/ms-submission-handler/atw.SubmissionItem.JsonSchemaDoc.json
   access-to-work.submission.new:
     serialisationClass: uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem
     snsEventRoutingKey: ${ATW_CUSTOMER_SUBMISSION_ROUTING_KEY:-sns.incoming.submission.atw}
