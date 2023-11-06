@@ -23,6 +23,7 @@
             ]]>
         </notes>
         <cve>CVE-2018-11087</cve>
+        <cve>CVE-2023-46120</cve>
     </suppress>
     <suppress>
         <notes>
@@ -47,6 +48,7 @@
             ]]>
         </notes>
         <cve>CVE-2022-45688</cve>
+        <cve>CVE-2023-5072</cve>
     </suppress>
     <suppress>
         <notes>
@@ -87,5 +89,7 @@
             ]]>
         </notes>
         <cve>CVE-2023-36479</cve>
+        <cve>CVE-2023-36478</cve>
+        <cve>CVE-2023-44487</cve>
     </suppress>
 </suppressions>

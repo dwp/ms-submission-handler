@@ -105,6 +105,3 @@
 * **validate:** addition validation to EsaSubmissionItem for real property validation ([9f3b1bb](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9f3b1bb))
 * **validation:** creating the model and validators for the input structure (with tests) ([6374bc3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/6374bc3))
 * **version:** removed Rabbit dependencies and added in SNS/SQS ([4e60fe1](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4e60fe1))
-
-
-
