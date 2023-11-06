@@ -6,11 +6,11 @@ project:
   - project_id: 26961517
     component_name: ms-submission-handler
 
-    version: 4.9.0
+    version: 5.0.0
 
     last_verified:
-      date: "2023-10-11"
-      name: "@lewis.jones1"
+      date: "2023-11-06"
+      name: "@udaya.lekkala"
 
     tags:
       payments: false

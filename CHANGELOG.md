@@ -1,3 +1,7 @@
+# 5.0.0 (06-11-2023)
+
+* upgrade dropwizard dependency ([355a7d88](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/355a7d88))
+
 # 4.9.0 (11-10-2023)
 
 * Add support for new Access to Work application submission

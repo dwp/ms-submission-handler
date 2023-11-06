@@ -5,11 +5,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 import java.util.Properties;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.dwp.health.shop.submissionhandler.info.InfoDto;
 
 @RunWith(MockitoJUnitRunner.class)

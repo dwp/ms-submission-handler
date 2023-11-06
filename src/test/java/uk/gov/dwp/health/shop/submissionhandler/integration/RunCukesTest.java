@@ -1,7 +1,7 @@
 package uk.gov.dwp.health.shop.submissionhandler.integration;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerApplication;
 import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration;
 import io.dropwizard.testing.junit.DropwizardAppRule;

@@ -2,16 +2,16 @@ package uk.gov.dwp.health.shop.submissionhandler.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mongodb.ServerApiVersion;
+import io.dropwizard.core.Configuration;
+import jakarta.validation.constraints.NotNull;
 import uk.gov.dwp.health.messageq.amazon.items.AmazonConfigBase;
 import uk.gov.dwp.health.shop.submissionhandler.application.items.config.SubmissionConfigurationItem;
-import io.dropwizard.Configuration;
 import uk.gov.dwp.crypto.SecureStrings;
 import uk.gov.dwp.health.crypto.CryptoConfig;
 
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidKeyException;

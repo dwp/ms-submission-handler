@@ -1,9 +1,8 @@
 package uk.gov.dwp.health.shop.submissionhandler.application.items.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import uk.gov.dwp.health.shop.submissionhandler.application.items.interfaces.Payload;
-
-import javax.validation.constraints.NotNull;
 import java.io.File;
 
 public class SubmissionConfigurationItem {

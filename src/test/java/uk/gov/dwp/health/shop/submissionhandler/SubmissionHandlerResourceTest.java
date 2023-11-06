@@ -2,7 +2,6 @@ package uk.gov.dwp.health.shop.submissionhandler;
 
 import com.amazonaws.util.Base64;
 import com.google.common.collect.ImmutableMap;
-import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteError;
@@ -10,9 +9,8 @@ import com.mongodb.WriteError;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.UUID;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.bson.BsonDocument;
 import org.everit.json.schema.ValidationException;
@@ -22,8 +20,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.dwp.health.crypto.CryptoDataManager;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.dwp.health.crypto.CryptoMessage;
 import uk.gov.dwp.health.crypto.exception.CryptoException;
 import uk.gov.dwp.health.crypto.exceptions.EventsMessageException;
@@ -39,14 +36,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -116,7 +113,7 @@ public class SubmissionHandlerResourceTest {
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
-        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), eq(null));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
         assertThat(messageEventCapture.getValue().getMetaData().getRoutingKey(), is(equalTo(EVENT_ROUTING_KEY)));
@@ -135,9 +132,9 @@ public class SubmissionHandlerResourceTest {
         );
         Response response = instance.mainApplicationPOST(UNKNOWN_MSG_ID);
 
-        verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(schemaValidation);
+        verifyNoInteractions(mongoDbOperations);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
     }
@@ -159,7 +156,7 @@ public class SubmissionHandlerResourceTest {
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(REFERAL_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
-        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), eq(null));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
         assertThat(messageEventCapture.getValue().getMetaData().getRoutingKey(), is(equalTo(EVENT_ROUTING_KEY)));
@@ -182,7 +179,7 @@ public class SubmissionHandlerResourceTest {
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
-        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), eq(null));
 
         assertThat(messageEventCapture.getValue().serialisedBodyContentsToJson(), is(equalTo(VALID_JSON)));
         assertThat(messageEventCapture.getValue().getMetaData().getRoutingKey(), is(equalTo(EVENT_ROUTING_KEY)));
@@ -194,14 +191,14 @@ public class SubmissionHandlerResourceTest {
     @Test
     public void validPayloadCryptoThrowsExceptionToGet500() throws CryptoException, IOException, EventsMessageException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         doThrow(new CryptoException("I am an exception!"))
-            .when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
+            .when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), eq(null));
 
         SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), eq(VALID_JSON));
-        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), any(Map.class));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), messageEventCapture.capture(), eq(null));
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
@@ -217,7 +214,7 @@ public class SubmissionHandlerResourceTest {
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString());
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
@@ -225,14 +222,14 @@ public class SubmissionHandlerResourceTest {
 
     @Test
     public void validPayloadSnsMqThrowsExceptionToGet500() throws CryptoException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, EventsMessageException, InvocationTargetException {
-        doThrow(new EventsMessageException("mocked exception thrown!")).when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        doThrow(new EventsMessageException("mocked exception thrown!")).when(mqPublisher).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
 
         SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
         verify(mongoDbOperations, times(1)).insertNewSubmissionRecord(any(AtwSubmissionItem.class), anyString());
-        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        verify(mqPublisher, times(1)).publishMessageToSnsTopic(eq(false), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
@@ -244,8 +241,8 @@ public class SubmissionHandlerResourceTest {
         Response response = instance.mainApplicationPOST(INVALID_JSON_CONTENTS);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(INVALID_JSON_CONTENTS), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(mongoDbOperations);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(PAYLOAD_ERROR_RESPONSE)));
@@ -256,9 +253,9 @@ public class SubmissionHandlerResourceTest {
         SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST("{\"not_a_configured_node\" : \"this should fail\"}");
 
-        verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(schemaValidation);
+        verifyNoInteractions(mongoDbOperations);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
@@ -269,9 +266,9 @@ public class SubmissionHandlerResourceTest {
         SubmissionHandlerResource instance = new SubmissionHandlerResource(configuration, schemaValidation, mongoDbOperations, mqPublisher);
         Response response = instance.mainApplicationPOST("{\"not_a_configured_node : \"missing_quotation\"}");
 
-        verifyZeroInteractions(schemaValidation);
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(schemaValidation);
+        verifyNoInteractions(mongoDbOperations);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(STANDARD_500_RESPONSE)));
@@ -286,8 +283,8 @@ public class SubmissionHandlerResourceTest {
         Response response = instance.mainApplicationPOST(VALID_JSON);
 
         verify(schemaValidation, times(1)).validateJsonDocumentWithFile(eq(VALID_JSON), eq(SCHEMA_SERIALISATION_ENTRY), eq(ATW_SCHEMA));
-        verifyZeroInteractions(mongoDbOperations);
-        verifyZeroInteractions(mqPublisher);
+        verifyNoInteractions(mongoDbOperations);
+        verifyNoInteractions(mqPublisher);
 
         assertThat("response should be 500", response.getStatusInfo().getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat("response payload should be standard", response.getEntity().toString(), is(equalTo(PAYLOAD_ERROR_RESPONSE)));

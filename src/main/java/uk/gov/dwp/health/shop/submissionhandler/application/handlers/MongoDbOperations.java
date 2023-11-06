@@ -9,13 +9,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
+import jakarta.inject.Inject;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration;
 import uk.gov.dwp.health.shop.submissionhandler.application.items.interfaces.Payload;
-
-import javax.inject.Inject;
 
 public class MongoDbOperations {
   private static final Logger LOG = LoggerFactory.getLogger(MongoDbOperations.class.getName());
