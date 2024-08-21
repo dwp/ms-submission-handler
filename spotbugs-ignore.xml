@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.SubmissionHandlerResource"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.application.SubmissionHandlerConfiguration"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.application.handlers.MongoDbOperations"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.application.items.AtwSubmissionItem"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.application.items.EsaSubmissionItem"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.shop.submissionhandler.info.PropertyFileInfoProvider"/>
+        <Bug pattern="DCN_NULLPOINTER_EXCEPTION"/>
+    </Match>
+</FindBugsFilter>

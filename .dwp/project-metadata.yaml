@@ -6,10 +6,10 @@ project:
   - project_id: 26961517
     component_name: ms-submission-handler
 
-    version: 5.0.0
+    version: 5.1.0
 
     last_verified:
-      date: "2023-11-06"
+      date: "2024-08-21"
       name: "@udaya.lekkala"
 
     tags:

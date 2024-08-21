@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java17@sha256:2f01c2ff0c0db866ed73085cf1bb5437dd162b48526f89c1baa21dd77ebb5e6d
+FROM gcr.io/distroless/java17@sha256:8bb82ccf73085b71159ce05d2cc6030cbaa927b403c04774f0b22f37ab4fd78a
 EXPOSE 9044
 
 COPY ./target/ms-submission-handler*.jar /ms-submission-handler.jar

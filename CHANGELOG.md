@@ -1,6 +1,17 @@
-# 5.0.0 (06-11-2023)
+<a name="5-1-0"></a>
+# 5-1-0 (2024-08-21)
 
-* upgrade dropwizard dependency ([355a7d88](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/355a7d88))
+* ci: pipeline spring boot update ([99b13d30](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/99b13d30))
+* chore: remove jaxb [skip ci] ([6aa02cef](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6aa02cef))
+* feat: minor updates and add jaxb ([093a8cbf](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/093a8cbf))
+
+# 5-0-0 (2023-11-10)
+
+* fix yaml issues [skip ci] ([a3e9d6b](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a3e9d6b))
+* release branch ([7b287da](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7b287da))
+* release branch ([7c85af8](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7c85af8))
+* update version [skip ci] ([6586796](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6586796))
+* F 6127: upgrade dropwizard and other dependencies ([962db2f](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/962db2f))
 
 # 4.9.0 (11-10-2023)
 
