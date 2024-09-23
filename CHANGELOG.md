@@ -1,122 +1,562 @@
-<a name="5-1-0"></a>
-# 5-1-0 (2024-08-21)
+##  5.1.0 (2024-08-28)
 
-* ci: pipeline spring boot update ([99b13d30](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/99b13d30))
-* chore: remove jaxb [skip ci] ([6aa02cef](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6aa02cef))
-* feat: minor updates and add jaxb ([093a8cbf](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/093a8cbf))
-
-# 5-0-0 (2023-11-10)
-
-* fix yaml issues [skip ci] ([a3e9d6b](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a3e9d6b))
-* release branch ([7b287da](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7b287da))
-* release branch ([7c85af8](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7c85af8))
-* update version [skip ci] ([6586796](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6586796))
-* F 6127: upgrade dropwizard and other dependencies ([962db2f](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/962db2f))
-
-# 4.9.0 (11-10-2023)
-
-* Add support for new Access to Work application submission
-
-# 4.8.0 (19-01-2023)
-
-* Add reason no ssp
-* Update dockerfile user
-
-#4.7.0 (10-03-2022)
-
-* Update database compatibility from mongo v4 to mongo v5
-
-#4.6.1 (02-02-2022)
-
-* Updates Jar packaging strategy
-* Updates Dropwizard
-
-##4.6.0 (07-12-2021)
-
-* Updates validation in common-case-application-classes
-* Prepare ms-submission-handler for Mongo v5 upgrade
-
-##4.5.0 (20-10-2021)
-
-* initial open sourcing of ms-submission-handler
-* dependency / security updates
-* add open source pipeline fragment
-
-## Combined changelog for release prior to 4.5.0
-
-### Bug Fixes
-
-* **atlas:** adding in a configurable switch for 'sslInvalidHostNameAllowed' to cater for the certificate not having the original hostname in Mongo Atlas. ([4eee64c](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4eee64c))
-* **bundle:** only bundle application.yml to the jar file and leave the json test files to be deployed locally.  If required in the bundle then add another entry with filtering false to bundle them unmodified ([3698ce1](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/3698ce1))
-* **certs:** created new 5yr certificates that are only used for the src/test setup ([c2132c0](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c2132c0))
-* **ci:** fix typo in Dockerfile ([c4107c0](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c4107c0))
-* **ci:** update Dockerfile ([83868bb](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/83868bb))
-* **class-cast:** remediate the Checkmarx medium risk for unchecked class cast by forcing the Class.forName to subclass to Payload.class ([0fb51f5](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/0fb51f5))
-* **dependency:** updated message-utility to v2.1.3 ([4d63c4a](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4d63c4a))
-* **env:** revert change to BUILD_NUMBER as env.BUILD_NUMBER is actually correct ([2c24326](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/2c24326))
-* **events:** apply the latest events version to (correctly) handle SNS publishing / SQS comsumption ([92ea697](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/92ea697))
-* fix time validation ([a948731](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/a948731))
-* fragment version ([dd01c28](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/dd01c28))
-* **hpi-168:** updated messages to use persistent delivery modes ([4531cd3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4531cd3))
-* **lint:** apply standard formatting and address pmd and checkstyle issues ([e57f707](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/e57f707))
-* **mongo:**  fixed support for mongo+srv URI naming and renamed the configuraiton item to be URI instead of URL.  Also looking at replaced Fongo as this does not work with the newest mongo version at the moment (https://github.com/fakemongo/fongo/issues/316) ([537b687](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/537b687))
-* **mongo:** if Mongo goes away the injected MongoClient becomes stale and fails from that point forwards.  Create/Close connections as required ([4d802f4](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4d802f4))
-* **mongo:** remove Fongo as it does not (yet) support Mongo 3.7.0 which we must use in order to support the +srv URI functionality.  Using embedded-mongo instead for all database interactions ([1b31db6](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/1b31db6))
-* **naming:** ajust the main class for ATW to reflect the usage, with config updates ([9ebd5b3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9ebd5b3))
-* **naming:** change the projectName to be more general across Health ([83695df](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/83695df))
-* **owasp:** add suppression for slf4j until next release is out ([e9360d9](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/e9360d9))
-* **owasp:** fix jetty vulnerability ([13a3470](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/13a3470))
-* **owasp:** update vulnerable packages ([b001927](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/b001927))
-* **owasp:** updated jackson-databind and removed unused suppressions ([8957cc1](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/8957cc1))
-* **owasp:** updated owasp vulnerabilities that can be excluded ([5fc327a](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/5fc327a))
-* **packages:** fix package names to HealthPDU standard ([3f69b82](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/3f69b82))
-* **rabbit:** include truststore/keystore configuration parmaeters for rabbitmq connection ([e8a2c05](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/e8a2c05))
-* **rabbitmq:** fix rabbitmq static issues ([340ea3d](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/340ea3d))
-* **rabbit:** use the latest version of rabbitmq library that will reuse a single connection ([ecc0e8f](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/ecc0e8f))
-* removed validation for either contact or rep required. These are not mandatory fields ([dc22381](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/dc22381))
-* **sonar:** address sonarqube issues ([9d677f1](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9d677f1))
-* **sonar:** remov unused dependencies from classes ([f66f831](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/f66f831))
-* **strict:** important parameter to EnvironmentVariableSubstitutor in order to support default values for unset environment variables ([64ac035](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/64ac035))
-* **typo:** change the schema validation from yml to json ([c6330aa](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c6330aa))
-* **typo:** fix typo in events spec ([12df751](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/12df751))
-* update dev certs and bump dependency versions ([fb82996](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/fb82996))
-* **URL:** in order to support the seed-list naming convention for mongo clusters 'mongodb+srv://user:password[@mongodb](https://github.com/mongodb).com' the URL needed to be updated to java.net.URI.  SSL will be enabled if the truststore file name is NOT null in the configuration ([c8964db](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c8964db))
-* **variable:** correct the enviornment variable from jenkins to BUILD_NUMBER ([b370553](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/b370553))
-* **versions:** updated versions to carry fixes for logging and updated OWASP dependencies ([f54cc89](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/f54cc89))
-* **vuln:** address owasp vulnerability ([29567d3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/29567d3))
-* **vuln:** address snakeyml vulnerability ([35b7067](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/35b7067))
+*  feat: minor updates and add jaxb [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3d73b875a9235e2b17847e6b005df20370658b89)
+*  chore: remove jaxb [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cb5b65b93d4bbfbedb0ad38477e3003d9aadaece)
+*  ci: pipeline spring update [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b560751b44a4e3d1167bb66f3ae2b6018eb7c284)
+*  enter new line in change log [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8c03a5e4ee54a23418a0d223d09b971297c6833c)
 
 
-### Features
+##  5.0.0 (2023-11-10)
 
-* add new endpoint for service info ([45d5da6](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/45d5da6))
-* add tests and refactor ([ad1f180](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/ad1f180))
-* add variable for jenkins build number ([36d84d2](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/36d84d2))
-* **ci:** add Dockerfile ([abdbce3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/abdbce3))
-* **ci:** add sonar-project.properties file ([8cb51c2](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/8cb51c2))
-* **dev:** on-going development ([9ea5bf0](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9ea5bf0))
-* ensure no duplicate application reference with unique key constraint in DB: ATW-25 ([c1e5aef](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c1e5aef))
-* **env-var:** allow environment variable substitution for the application ([ab78b52](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/ab78b52))
-* **esa:** new additions for ESA that implement the absolute minimum to be able to accept and propagate a message ([61b4f90](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/61b4f90))
-* **format:** run through standard formatter and created a BaseItem interface to use in item classes that are not of type Payload ([aee2990](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/aee2990))
-* **ha-1314:** added a build time to the application properties ([a0f76ca](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/a0f76ca))
-* HPI-252 modified config for many input, modified tests. Surname mandatory in submission item ([065aa70](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/065aa70))
-* HPI-252 split JSON file per event type ([c4ee068](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/c4ee068))
-* **ignore:** set class to ignore unknown as msg_id is not a member of this ([0ef3159](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/0ef3159))
-* implement new crypto work in submission handler. First pass ([05a6e79](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/05a6e79))
-* **imports:** correctly set imports for no wildcards ([7bead43](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/7bead43))
-* **logging:** Alter default log level to INFO, rather than DEBUG ([13f388b](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/13f388b))
-* **mongo:** ingore the SAN certificate error when connecting to Mongo Atlas by allowing certificates names that do not match the hostname ([54f84eb](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/54f84eb))
-* move version path back to top of class ([0e04b9d](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/0e04b9d))
-* **properties:** first pass at deciding how to identify the incoming event and pick from the configuration.  decided on msg_id ([d86921e](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/d86921e))
-* refactor for review comment ([e752f94](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/e752f94))
-* refactor from review comments ([179da96](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/179da96))
-* refactor yml file ([9b1acdd](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9b1acdd))
-* remove info file and add properties to existing yml file ([433f110](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/433f110))
-* **services:** new signiture and tests to pick the relevant entry from configuration and use it in the resource depending on value ([a4d4189](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/a4d4189))
-* update log to provide readable data instead of object reference ([903ff0d](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/903ff0d))
-* **updates:** updated pom entries for JAVA11 and OWASP coverage ([087f106](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/087f106))
-* **validatation:** continued adding of the validation and specification for the incoming model.  once the model is complete everything should flow easily through the remaining services.  ATWDC-1228 ([5a31e09](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/5a31e09))
-* **validate:** addition validation to EsaSubmissionItem for real property validation ([9f3b1bb](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/9f3b1bb))
-* **validation:** creating the model and validators for the input structure (with tests) ([6374bc3](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/6374bc3))
-* **version:** removed Rabbit dependencies and added in SNS/SQS ([4e60fe1](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/commit/4e60fe1))
+*  F 6127: upgrade dropwizard and other dependencies [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/962db2f8005f29d07aa4a423df9dc8d01ea89f59)
+*  build(cl): updating changelog [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/af0c40ea05a2765fa889160b15902c97fc733222)
+
+
+##  4.9.0 (2023-11-06)
+
+*  chore: resolve dependency vulns [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a2ece63579999c7e185e19ae3e71823d3ce201c9)
+*  chore: update fragment versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/321dc5c31ac82390f3be1c4573f4e81e20d6b812)
+*  chore: update fragment versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a229d66b09249a95dd04c7bc0949e99a656bab73)
+*  test: remove conflicting depenndnency [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/51b8cb3303785ea521a8bc8f7c6bd6b1bbb7b527)
+*  chore: update fragment versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/bb4220d6fba8fe3e14c48171ae6484f7337b2430)
+*  chore: updates for shared runners [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2c9ef9e2d0b8400b1562185e660a665dd47cf9ae)
+*  chore: update dwp dep versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c272e66a53fa1cfc216911571bb6f4a624df5522)
+*  chore: revert shared runner changes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1ec769994f0f1bfd2e620a6cddb2f3704ae7593b)
+*  fix: fix compilation issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/52ea5c75b887b50aa5f53f6640739a2de8aa6722)
+*  refactor: linting issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc2b8f7b7a6cf150fa104b8e5c6833f3ea48d989)
+*  chore: downgrade breaking dependency version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e41a086fb077c208a84c2172f8af34a43171da52)
+*  build: update java image to resolve vulns [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/13c107c7ecccd2aec48dc5fcc7ff5ef8316ba860)
+*  chore: pin dependencies [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1b84f901547bd7b5a888dc55de10d6f2a5206f36)
+*  chore: update pipeline-solutions/gitlab to v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fbb461adc96a64e5d71d9f13dca4531ad0752a70)
+*  chore: update automerge/common-ci-updates [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/67c4bf2bb981e4c1b319001faa959b9e906d53e4)
+*  refactor: use same file for atw submission, new node for new apply service [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b3d6bfd2b79ed87f1e7952ee62c2b529e83c13c0)
+*  feat: update dependencies and suppressions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/185a06c71018874f349e8eaa9d24843f83d40f24)
+*  chore: prepare update for 4.9.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a1c8a851cf172f67a5b7034cc0a4ee0aea42c4e3)
+*  chore: suppress CVE [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fb185d4036ffc4acc83ac83d44d08b62f35cd4c0)
+*  chore: add trivy-container suppression [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/24581ef752685285dee735a0ff62be2677f8776f)
+*  chore: add trivy-container suppression [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d5e197a9ead2da1d13714f677ce1daa3865ffa5c)
+
+
+##  4-8-0 (2023-01-23)
+
+*  chore: version bumps [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/30f63e08c34f9987f9ea7a20878ef07f5dbc0a6f)
+*  chore: versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ae3d3a84defdaa02f5ba01883dc06f0554f87e56)
+*  Resolve "Fix failing pipeline" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b133ea57a8a507a573604d23724a15b5d99a97a7)
+*  F ci [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8dd36b6c1f3f623cbba8b4f3cadd420a69a10198)
+*  feat(f-htf-1938) Update PDF to show new reason no sick pay information [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/bce930b0aeaa6cd2769aebed578a0b4ad6cbe542)
+*  ci: fix pipelines [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/87df341d4f7638a965b069c2fd841b28c26ebf91)
+*  F ci - update pom file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8dd7f05c478a4c22adb516e29edd5614f7dbc524)
+*  Update pom.xml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/95ccca6d8eafa710b02f6d5ff2205b979d44eb04)
+*  Update CHANGELOG.md [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/745de925494fa61c93036d0ceac50ad2cac04865)
+
+
+##  4-7-0 (2022-03-21)
+
+*  build: updates version [skip-ci] [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b37470a75bb9a0a7d729315bde00ebbee8fd3343)
+*  MongoDB 5 migration [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/aae1910531f6d650256978e62bc704c935cb0725)
+*  Update release version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e459eebfea02f6ecea8704e60f22c732a624dd2b)
+*  Docs: update changelog [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2afaf2e1c8bb2ede6864a7080d83cf86f3a8e46d)
+
+
+##  r-4-6-1 (2022-02-03)
+
+*  build: updates version [skip-ci] [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e69b4293dc49a07e860aadafb7b6e66491f04c39)
+*  Resolve "ESAO-1535 Pipeline failing in ms-submission-handler" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f7e18a935498dba2704ae767c4489369f0b05828)
+*  Resolve "jar packaging (required for signed dependencies)" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b2637ad30a2a22daed3fe2a7b57e42443c6587d2)
+*  build: updates version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6b19c20425a49906f7946b31ddf70b51ccbd7767)
+
+
+##  4-6-0 (2021-12-13)
+
+*  build: bumps version [skip-ci] [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f1b3d653246abfa9bc348d263d06060239e1986a)
+*  build: removes sonar-scanner allow_failure [skip-ci] [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0483b5c1cc0f911ef88967dfb4cc7de41af6f7a3)
+*  Resolve "ESAO-1511 Prepare ms-submission-handler for Mongo v5 upgrade" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b5299207a82ca689e4313338d03972a7a16428a8)
+*  Resolve "ESAO-1515 Fix validation in common-case-application-classes" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/69152f4084f9b824b4ad89b52af5ecc96acd9ac5)
+*  build: updates version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f19490b3696241896c8bff8fa22cf522e81352d5)
+
+
+##  4-5-0 (2021-10-25)
+
+*  Resolve "Added log level to sub-handler" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e6946b641b90089e3b3a12372308082b4b34ce20)
+*  Resolve "Refactoring to prepare for open-source" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/396e3edd250a273ea786ca4e4dad3585608d8490)
+*  updates semantic versioning and changelog [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8a7ad097c5ad5f28a82e02731714181c9717657a)
+*  build: allow temp allow failure on sonarqube [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ef95e1e224a1268c976271e4ce2e72e176319c9a)
+*  build: allow temp allow failure on sonarqube [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/23eb01291de572821dd26ac6cb96c9c02bf22c86)
+
+
+##  4-4-0 (2021-09-01)
+
+*  build: update fragment and jetty versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/14d5315eccfec77e492d8a97938e251dab4eb692)
+*  Resolve "ESAO-1356 Capture email in online journey" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4e65311dd1879a6943f05fd520f0471cb6ba13de)
+*  build: update  semver [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fa1312cc783c3c6870cfc0aa3acdc7c4153105ed)
+
+
+##  4-3-0 (2021-07-05)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+*  build(new-version): packaging v2.2.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cb3b8ac8fd12ac5a78ae16612df4a35a36239d88)
+*  build(new-version): packaging v2.3.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/72934e808534a625e0a1baf855f352cd2f8c0bbe)
+*  build(new-version): packaging v3.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4fedac7007a8a809fa45ae91088146ae52d876b)
+*  build(new-version): packaging v3.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/41184381d827aaf1f83772b6203b6d671d342166)
+*  build(new-version): packaging v4.0.0 SNS publisher [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e2fd1215a3c99293d25151739a91506b7f0c120c)
+*  build(new-version): packaging v4.0.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f3a19633fd12db46bd3c600378e17da1dcf2a6a3)
+*  build(new-version): packaging v4.0.2 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/22c6eeb97da4cbc06a73c882655296b2f1faae21)
+*  fix(owasp): update vulnerable packages [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b001927ff97c9d166fcaf8f866bed7fd7607467d)
+*  build: increment messaging utility version to 2.1.4 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/05d5111484b2fd03d4ee9d842259388e400f0762)
+*  fix: update dev certs and bump dependency versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fb8299622ec913b05ada3def78ccdf61a98518c6)
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3652cbb01afd226c82a42bd96f1925bacb999085)
+*  Feat: update readme to include CI information. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d6ae0fdbcadbf6ec3aefa40d5dba793602826d3f)
+*  Build: Update tactical push [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/67eff092018a85beb1941470d841f6193dea88c6)
+*  fix: fix time validation [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a948731c4522375866bcc98c48bf984b3338fbc7)
+*  Resolve "ESAO-870 ms-submission-handler logging improvements" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/276f533fa24e5505d76e24cc25f8ead50a685cb9)
+*  Feat: Remove allowfailure for checkmarx. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a66872f3bd9f347e36d962d972de04e9a6523d23)
+*  Resolve "Ensure externalised config supports localdev usage of docker image without replacing config file" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f8658e43450aa173d2217169e214a0976b17eecd)
+*  fix(lint): apply standard formatting and address pmd and checkstyle issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e57f7076131dbc2c698ca8c81e08d0f69ec48340)
+*  build: update to allow tactical release runs [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2bb34b0d2d675f8535fd09277a525f6cce46721f)
+*  Feat: Add create-schedules stage to pipeline for nightly build. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/77e156783ced7d8aff948aa25a7eed14c60f920f)
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/885454852c58a4dd5629500f476fbbce660854e4)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/df0bad9e0f898f816ae573595e7a0dd335f6e3ae)
+*  build: Update fragment versions. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d914d57396aad91c1159f7932ccdc35bd074d611)
+*  build(owasp): address jetty-security vulnerability [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8fb81cf84588fb9e1f76567cd70baf704c701877)
+*  Build: Update major fragment versions. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/52d8dc353db7f1ed0604cf0e21a4f5ede48c6b06)
+*  Resolve "test/update required fragment check" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8a1faaa06b37275317b9d450355e084d9f4f4908)
+*  fix(vuln): address snakeyml vulnerability [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/35b70671f94dfec8c30f3510f3647053b68c0383)
+*  fix(vuln): address owasp vulnerability [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/29567d36a52dc0fa3e64b30efa6565498885921a)
+*  Resolve "Externalise version info config item to env var" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/bce784edb0b50ea8b15c0871f618c3156b757616)
+*  fix: fragment version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dd01c28f3973c5b8754bd956eef398ef15f22ac7)
+*  build: update jetty and fragment versions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8af0a806b3b5a51d1c84cc32fa7d0d69587bf39d)
+*  Resolve "Change jetty and dropwiz version to resolve vuln" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/aca9d0e8673fa6a01af50afedea58a0895a3bdf1)
+*  feat(validate): addition validation to EsaSubmissionItem for real property validation [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9f3b1bb2091b5c7f9cf81dfa8d32d9f0f738f4cd)
+*  Resolve "Update mongo-java-driver version for upcoming mongoDB 4.2 upgrade" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e6aa3ec5454f01903e7353051c4e3e64d6507010)
+*  Build: Logging changes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2211fd490ab5521a2866c8281b54628f5d261e27)
+*  Resolve "update common-esa and pipeline fragment versions" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ed97c6f1eeead86e54e5a70876624280e6a63ead)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e47fb9f01a71656c1f02270b0198e82a5fa095db)
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8c48ea92367b7833d1686ebcbda296783324bac6)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3b818f63bc5c467215963c5c408c5d38f5b3d1af)
+*  Resolve "ESAO-1300 Update validation on common-case-classes to be in sync with UI" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ed9290f3e875d2e26cbb5a85fbc3caeef458dde2)
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc50602dccbae55c85641246223be9ceab0dd73e)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/77090d18aab8634fefd9be24075eb6cf3401b041)
+*  Resolve "Add open source docs for submission handler" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/12693f3d2349b52c8a24b35d5c861351c1e7c3b4)
+*  Build: Update fragment versions. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1b3cc4dc04fefe9f719197ce41a41299756ef47a)
+*  Build: Update fragment versions. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/97e31afeab7bdd6fc7c8016f28bd1af1ef58895d)
+*  Build: Update fragment versions. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6bdfad05af8625db57fb87edeab82c4105ef41a1)
+*  Resolve "PoC CSI config" [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dbcb05d8cdebc5aceced53d34527c661fddf6624)
+*  chore: Change env variable for AtW customer-ui routing [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/56b2b0573fe9854610d88c9018e520e0721c8e59)
+*  build: new version of common-classes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/27275e5ffd3372000b69ba7501cbd0f90087d16d)
+*  build: update jetty version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/994845c818cfdec1d226940db13ef38c6a294cdc)
+*  build: update semver [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5ca322132250b1723729e5f45fd854a59d4f6480)
+
+
+##  4-2-1 (2021-03-24)
+
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc50602dccbae55c85641246223be9ceab0dd73e)
+
+
+##  r-4-2-0 (2021-03-04)
+
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8c48ea92367b7833d1686ebcbda296783324bac6)
+
+
+##  4-1-1 (2021-02-16)
+
+
+
+##  v4.1.0 (2020-07-02)
+
+*  test(docker): using real Mongo container instead of mock but meaning that we can not test the scenario where mongo is unavailable [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/885454852c58a4dd5629500f476fbbce660854e4)
+
+
+##  v4.0.2 (2019-07-30)
+
+*  fix(dependency): updated message-utility to v2.1.3 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4d63c4aa5fadac6a40b57b7338dcfed808deec7e)
+*  build(new-version): packaging v4.0.2 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/22c6eeb97da4cbc06a73c882655296b2f1faae21)
+
+
+##  v4.0.1 (2019-07-22)
+
+*  fix(owasp): updated jackson-databind and removed unused suppressions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8957cc117ef3a974a38abd88079e179729e74355)
+*  fix(events): apply the latest events version to (correctly) handle SNS publishing / SQS comsumption [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/92ea6978dcaa65e01ca0a9cd096d5a7a3bd0fb73)
+*  build(new-version): packaging v4.0.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f3a19633fd12db46bd3c600378e17da1dcf2a6a3)
+
+
+##  v4.0.0 (2019-05-10)
+
+*  feat(dev): on-going development [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ea5bf0067538288c3b9e99ff2135fa5017bb77f)
+*  feat(updates): updated pom entries for JAVA11 and OWASP coverage [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/087f1060e3602a0ca562a7260ac5c3a24cd204f6)
+*  feat(properties): first pass at deciding how to identify the incoming event and pick from the configuration.  decided on msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d86921ee6d72fee706c7562625c3080ed4e786a0)
+*  feat(ignore): set class to ignore unknown as msg_id is not a member of this [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0ef31599b8ce2e8793581e2954010c0a008f5b33)
+*  feat(services): new signiture and tests to pick the relevant entry from configuration and use it in the resource depending on value [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a4d4189eed3c3f9fc50e51175c96eb29c3cb966d)
+*  feat(imports): correctly set imports for no wildcards [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7bead43114b6994696a1aa661ce92e851602a262)
+*  refactor(naming): created a subitems package for classes that support a main message.  also made msg_id mandatory and all main message level classes should extend the MandatoryMsgItems class (which currently only contains msg_id) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8f607f4f825eb2fe6850e77bc8dddd4a27cd713c)
+*  feat: HPI-252 split JSON file per event type [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4ee0689f09b60da9a6e6062c3e9b2041176d81f)
+*  fix(bundle): only bundle application.yml to the jar file and leave the json test files to be deployed locally.  If required in the bundle then add another entry with filtering false to bundle them unmodified [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3698ce1852bceb5b0cbb8b2dfbd535d1c614da88)
+*  file(config): only one entry per json schema so removed referral from atw and created a new one for testing [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2a8ae1995e5cd80d5605c25a7b179f0f80b7c9f4)
+*  test(file): explicitly verify that the expected file is being passed to a mock.  deliberately broken to prove the value of using eq() rather then any() [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/abefe711a0650b1ec60bc80dee6d704a38b25f42)
+*  feat: HPI-252 modified config for many input, modified tests. Surname mandatory in submission item [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/065aa706b51dd762a48ea5515d71f590accce033)
+*  feat : updated spec files with new msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d6b208d70c88df3d48ec526e27e4ac01c08962aa)
+*  docs : unpdate readme to use correct POST path [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5ab4d98d177332a6bb6b55372eca46ee0554f244)
+*  config(comment): remove comment from dev.yml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2ba34a99eaa928a4fb4846c3189214f497700d2a)
+*  fix: removed validation for either contact or rep required. These are not mandatory fields [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc223811b04f81275e795952e722b1b656428b52)
+*  fix(owasp): updated owasp vulnerabilities that can be excluded [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5fc327aa4d3ec681c0099afca2bb4c131926078b)
+*  fix(owasp): add suppression for slf4j until next release is out [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e9360d91ee4bdd68dc008a290bd3dbf99ab81ad0)
+*  build(new-version): packaging v3.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4fedac7007a8a809fa45ae91088146ae52d876b)
+*  fix(naming): change the projectName to be more general across Health [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83695df7d03c0559279b49633487ba7b4f55120a)
+*  feat(esa): new additions for ESA that implement the absolute minimum to be able to accept and propagate a message [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/61b4f9052a903173eed6e9f2bc248b605782b105)
+*  fix(typo): change the schema validation from yml to json [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c6330aad88845e8bfe945032c14c2bbeb68b30ad)
+*  test(esa): on-going tests for esa format and validation in addition to vulnerability checks and more cucumber tests [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6bdd784d1b1e791567f09292b11506703df6cb98)
+*  build(owasp): amend jackson-databind version for owasp [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fa02a2108cfcfbdd045c269616f34684264a776a)
+*  test(api): testing the apis behave differently (around submitted date) depending on the target endpoint and testing outputs [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7f6835db610fcf413df42a55cfd5d52f36c395fb)
+*  feat(env-var): allow environment variable substitution for the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ab78b527d384084c73f216a539f5c57898358df0)
+*  feat(version): removed Rabbit dependencies and added in SNS/SQS [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4e60fe17bd075aadc93206ccf99185f3d5f669f7)
+*  test(cucumber): implementing SQS/SNS tests [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ff2f57dbc44a88cb0a74e44229f8d64b9cc50e84)
+*  test(cucumber): updated cucumber tests to be SNS/SQS aware [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/33cc14bfd7ea775b65d99f70395b6f1575c771d7)
+*  build(new-version): packaging v3.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/41184381d827aaf1f83772b6203b6d671d342166)
+*  version(pom): update to release version of the message-utility [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8148c0d8abcc9884a822e8973d9a4df2554bf99d)
+*  feat(env-config): back-port env config into the 2.3.x line [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/118a25c761e544541cc0a225275f6c64e7ce3ef9)
+*  build(new-version): supporting environment variable substitution, v2.3.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/637eda322cafa069caac8c92a9db578e141fb55c)
+*  fix(strict): important parameter to EnvironmentVariableSubstitutor in order to support default values for unset environment variables [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/77a645cdb1d62966ed9cbb1e5972a0c638774764)
+*  build(version): updated build version for v2.3.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2119c9ad8e150dbe9af8235b76d2a901479b82cb)
+*  fix(strict): important parameter to EnvironmentVariableSubstitutor in order to support default values for unset environment variables [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/64ac035107aaeca6046454cdc816b8a36a622414)
+*  fix(owasp): fix jetty vulnerability [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/13a347018f82be2440a849166c410109e87df772)
+*  build(new-version): packaging v4.0.0 SNS publisher [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e2fd1215a3c99293d25151739a91506b7f0c120c)
+
+
+##  v2.3.1 (2019-04-05)
+
+*  feat(dev): on-going development [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ea5bf0067538288c3b9e99ff2135fa5017bb77f)
+*  feat(updates): updated pom entries for JAVA11 and OWASP coverage [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/087f1060e3602a0ca562a7260ac5c3a24cd204f6)
+*  feat(properties): first pass at deciding how to identify the incoming event and pick from the configuration.  decided on msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d86921ee6d72fee706c7562625c3080ed4e786a0)
+*  feat(ignore): set class to ignore unknown as msg_id is not a member of this [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0ef31599b8ce2e8793581e2954010c0a008f5b33)
+*  feat(services): new signiture and tests to pick the relevant entry from configuration and use it in the resource depending on value [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a4d4189eed3c3f9fc50e51175c96eb29c3cb966d)
+*  feat(imports): correctly set imports for no wildcards [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7bead43114b6994696a1aa661ce92e851602a262)
+*  refactor(naming): created a subitems package for classes that support a main message.  also made msg_id mandatory and all main message level classes should extend the MandatoryMsgItems class (which currently only contains msg_id) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8f607f4f825eb2fe6850e77bc8dddd4a27cd713c)
+*  feat: HPI-252 split JSON file per event type [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4ee0689f09b60da9a6e6062c3e9b2041176d81f)
+*  fix(bundle): only bundle application.yml to the jar file and leave the json test files to be deployed locally.  If required in the bundle then add another entry with filtering false to bundle them unmodified [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3698ce1852bceb5b0cbb8b2dfbd535d1c614da88)
+*  file(config): only one entry per json schema so removed referral from atw and created a new one for testing [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2a8ae1995e5cd80d5605c25a7b179f0f80b7c9f4)
+*  test(file): explicitly verify that the expected file is being passed to a mock.  deliberately broken to prove the value of using eq() rather then any() [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/abefe711a0650b1ec60bc80dee6d704a38b25f42)
+*  feat: HPI-252 modified config for many input, modified tests. Surname mandatory in submission item [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/065aa706b51dd762a48ea5515d71f590accce033)
+*  feat : updated spec files with new msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d6b208d70c88df3d48ec526e27e4ac01c08962aa)
+*  docs : unpdate readme to use correct POST path [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5ab4d98d177332a6bb6b55372eca46ee0554f244)
+*  config(comment): remove comment from dev.yml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2ba34a99eaa928a4fb4846c3189214f497700d2a)
+*  fix: removed validation for either contact or rep required. These are not mandatory fields [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc223811b04f81275e795952e722b1b656428b52)
+*  fix(owasp): updated owasp vulnerabilities that can be excluded [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5fc327aa4d3ec681c0099afca2bb4c131926078b)
+*  fix(owasp): add suppression for slf4j until next release is out [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e9360d91ee4bdd68dc008a290bd3dbf99ab81ad0)
+*  build(new-version): packaging v3.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4fedac7007a8a809fa45ae91088146ae52d876b)
+*  fix(naming): change the projectName to be more general across Health [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83695df7d03c0559279b49633487ba7b4f55120a)
+*  feat(esa): new additions for ESA that implement the absolute minimum to be able to accept and propagate a message [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/61b4f9052a903173eed6e9f2bc248b605782b105)
+*  fix(typo): change the schema validation from yml to json [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c6330aad88845e8bfe945032c14c2bbeb68b30ad)
+*  test(esa): on-going tests for esa format and validation in addition to vulnerability checks and more cucumber tests [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6bdd784d1b1e791567f09292b11506703df6cb98)
+*  build(owasp): amend jackson-databind version for owasp [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fa02a2108cfcfbdd045c269616f34684264a776a)
+*  test(api): testing the apis behave differently (around submitted date) depending on the target endpoint and testing outputs [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7f6835db610fcf413df42a55cfd5d52f36c395fb)
+*  feat(env-var): allow environment variable substitution for the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ab78b527d384084c73f216a539f5c57898358df0)
+*  build(new-version): packaging v3.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/41184381d827aaf1f83772b6203b6d671d342166)
+*  feat(env-config): back-port env config into the 2.3.x line [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/118a25c761e544541cc0a225275f6c64e7ce3ef9)
+*  build(new-version): supporting environment variable substitution, v2.3.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/637eda322cafa069caac8c92a9db578e141fb55c)
+*  fix(strict): important parameter to EnvironmentVariableSubstitutor in order to support default values for unset environment variables [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/77a645cdb1d62966ed9cbb1e5972a0c638774764)
+*  build(version): updated build version for v2.3.1 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2119c9ad8e150dbe9af8235b76d2a901479b82cb)
+
+
+##  v3.1.0 (2019-04-02)
+
+*  fix(naming): change the projectName to be more general across Health [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83695df7d03c0559279b49633487ba7b4f55120a)
+*  feat(esa): new additions for ESA that implement the absolute minimum to be able to accept and propagate a message [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/61b4f9052a903173eed6e9f2bc248b605782b105)
+*  fix(typo): change the schema validation from yml to json [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c6330aad88845e8bfe945032c14c2bbeb68b30ad)
+*  test(esa): on-going tests for esa format and validation in addition to vulnerability checks and more cucumber tests [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6bdd784d1b1e791567f09292b11506703df6cb98)
+*  build(owasp): amend jackson-databind version for owasp [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/fa02a2108cfcfbdd045c269616f34684264a776a)
+*  test(api): testing the apis behave differently (around submitted date) depending on the target endpoint and testing outputs [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7f6835db610fcf413df42a55cfd5d52f36c395fb)
+*  feat(env-var): allow environment variable substitution for the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ab78b527d384084c73f216a539f5c57898358df0)
+*  build(new-version): packaging v3.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/41184381d827aaf1f83772b6203b6d671d342166)
+
+
+##  v3.0.0 (2019-01-08)
+
+*  feat(dev): on-going development [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ea5bf0067538288c3b9e99ff2135fa5017bb77f)
+*  feat(updates): updated pom entries for JAVA11 and OWASP coverage [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/087f1060e3602a0ca562a7260ac5c3a24cd204f6)
+*  feat(properties): first pass at deciding how to identify the incoming event and pick from the configuration.  decided on msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d86921ee6d72fee706c7562625c3080ed4e786a0)
+*  feat(ignore): set class to ignore unknown as msg_id is not a member of this [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0ef31599b8ce2e8793581e2954010c0a008f5b33)
+*  feat(services): new signiture and tests to pick the relevant entry from configuration and use it in the resource depending on value [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a4d4189eed3c3f9fc50e51175c96eb29c3cb966d)
+*  feat(imports): correctly set imports for no wildcards [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7bead43114b6994696a1aa661ce92e851602a262)
+*  refactor(naming): created a subitems package for classes that support a main message.  also made msg_id mandatory and all main message level classes should extend the MandatoryMsgItems class (which currently only contains msg_id) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8f607f4f825eb2fe6850e77bc8dddd4a27cd713c)
+*  feat: HPI-252 split JSON file per event type [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4ee0689f09b60da9a6e6062c3e9b2041176d81f)
+*  fix(bundle): only bundle application.yml to the jar file and leave the json test files to be deployed locally.  If required in the bundle then add another entry with filtering false to bundle them unmodified [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3698ce1852bceb5b0cbb8b2dfbd535d1c614da88)
+*  file(config): only one entry per json schema so removed referral from atw and created a new one for testing [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2a8ae1995e5cd80d5605c25a7b179f0f80b7c9f4)
+*  test(file): explicitly verify that the expected file is being passed to a mock.  deliberately broken to prove the value of using eq() rather then any() [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/abefe711a0650b1ec60bc80dee6d704a38b25f42)
+*  feat: HPI-252 modified config for many input, modified tests. Surname mandatory in submission item [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/065aa706b51dd762a48ea5515d71f590accce033)
+*  feat : updated spec files with new msg_id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d6b208d70c88df3d48ec526e27e4ac01c08962aa)
+*  docs : unpdate readme to use correct POST path [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5ab4d98d177332a6bb6b55372eca46ee0554f244)
+*  config(comment): remove comment from dev.yml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2ba34a99eaa928a4fb4846c3189214f497700d2a)
+*  fix: removed validation for either contact or rep required. These are not mandatory fields [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dc223811b04f81275e795952e722b1b656428b52)
+*  fix(owasp): updated owasp vulnerabilities that can be excluded [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5fc327aa4d3ec681c0099afca2bb4c131926078b)
+*  fix(owasp): add suppression for slf4j until next release is out [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e9360d91ee4bdd68dc008a290bd3dbf99ab81ad0)
+*  build(new-version): packaging v3.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4fedac7007a8a809fa45ae91088146ae52d876b)
+
+
+##  v2.3.0 (2018-11-28)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+*  fix(sonar): address sonarqube issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9d677f1b3d6449cfb90f898864891a3f81b64d82)
+*  build(new-version): packaging v2.2.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cb3b8ac8fd12ac5a78ae16612df4a35a36239d88)
+*  build(new-version): packaging v2.3.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/72934e808534a625e0a1baf855f352cd2f8c0bbe)
+
+
+##  archive/HA-1960 (2018-11-28)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+*  fix(sonar): address sonarqube issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9d677f1b3d6449cfb90f898864891a3f81b64d82)
+*  build(new-version): packaging v2.2.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cb3b8ac8fd12ac5a78ae16612df4a35a36239d88)
+*  feature: ha-1960 send content-type=json in submission event message header. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/389ca6b4e62e1e766f45e65d4c10c3db853571c9)
+*  feature: ha-1960 send content-type=json in submission event message header. Use MediaType JSON constant and extend test to include header. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ad6449503cda1f1e83356ff0c9fc1c47fe707e86)
+*  test(correlationId): added test for correlationId in the AMQP headers too [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d27ae9e88072ea4c66d49b9c769e7a5a54712c73)
+
+
+##  v2.2.0 (2018-11-23)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+*  fix(sonar): address sonarqube issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9d677f1b3d6449cfb90f898864891a3f81b64d82)
+*  build(new-version): packaging v2.2.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cb3b8ac8fd12ac5a78ae16612df4a35a36239d88)
+
+
+##  archive/ATW-722 (2018-11-20)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+*  feat(ha-1314): added a build time to the application properties [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a0f76ca20c556641b0594c088d9ee64289478e2e)
+*  fix(certs): created new 5yr certificates that are only used for the src/test setup [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c2132c09945be071a66297973afafac77db9e94f)
+*  fix(versions): updated versions to carry fixes for logging and updated OWASP dependencies [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f54cc89a07f8b686e3c46ff609fd0ee71f6b2b3c)
+*  test(properties): update tests that rely on system properties to clear down each time to prevent previous tests (or environments) impacting on the test outcomes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7d6b152a5ccb9e3207d1ff3c35122fd0d49000ac)
+
+
+##  v2.1.0 (2018-10-04)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  feat: add new endpoint for service info [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/45d5da6c1189029a2cfc187d9bef6f77c3ba1c65)
+*  feat: add tests and refactor [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ad1f180c9fde39967ba10057fc1b56ddad78deee)
+*  feat: refactor yml file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9b1acddd65c25efbb1dee79060ac17179e1577fb)
+*  feat: add variable for jenkins build number [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/36d84d2c74bdfd52e82ce5ce168b289e2f8e121d)
+*  feat: refactor for review comment [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e752f949db5de75a997a494a47b058904d93a18f)
+*  feat: refactor from review comments [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/179da964b463c11abbe41bc61e8b6a74c852b335)
+*  feat: remove info file and add properties to existing yml file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/433f110afb265c7115c3908d5839f08fcef4febe)
+*  feat: move version path back to top of class [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0e04b9d9c1e6046455aa69c81178f432410c929a)
+*  feat: update log to provide readable data instead of object reference [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/903ff0df803f77ffd6c3dc7351503860ca1948d8)
+*  config(params): remove duplicate entries and reuse existing values [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0c7c9f71d31b67c584b1c719b980e5a689d441bf)
+*  config(names): updated configuration file property names [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e014c6dac135f30f27f19566e552d7dd3bde14d9)
+*  test(properties): update test property names for application name and version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0c6b46d43230ccbcfc1b1a8a70ca84abd3b3b420)
+*  test(typo): update test property version in test [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2b70cfb5538a2a5e28b9f1d350078a04a1a0ec18)
+*  fix(variable): correct the enviornment variable from jenkins to BUILD_NUMBER [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b370553f65b7d180c89b4833a68ffe8ada6cd755)
+*  fix(env): revert change to BUILD_NUMBER as env.BUILD_NUMBER is actually correct [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2c24326c0122e610d5fdb4d429e087a2ec5bb1b5)
+*  build(events): bump the messaging-utility version to v1.11.1 to cover the latest release [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e4606fe4fc23ac838a5653e4f4652c4e7fe33a46)
+*  build(new-version): packaging v2.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0493c76e85983cbf1ec9b3a789f6e28492adf1c0)
+
+
+##  archive/HPI-168 (2018-09-20)
+
+*  feat: changed all responses to be a JSON reply [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8ff3c9df817fe10d3c19dba82f9a185f41ab01ba)
+*  docs(spec-api): changed the spec api to match what is there [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/609d743790bd7ccf802653269e740de85222a3af)
+*  test(cucumber): added requirements to the BDD suite for correlation id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e647299acab1a8a455539fbb43490eeebed6fcc9)
+*  test(SubmissionHandlerTest): added requirement for correlation id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83dafbef64cb1a6c3eec0179970f8d4bc86929dd)
+*  chore: lexicographical order [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/721fe05732ca975bec597ffdecc8fcf0834231e1)
+*  feat: added a default exception handler and correlation id to all items [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/036d691470f05bdccf00e00fdc0e3d9aafac838f)
+*  fix: 404 not found is now registered with DropWizard properly [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dd30b23454c19a471d4f0127ff3c124175a8e5b8)
+*  ci(version): create fha-SNAPSHOT version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b34c100e14cf8e804fe0e1ccdaa6c3902e48dbee)
+*  fix: Remove DWPEncodedLogger instance reference [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/37f75caaa6bc28a6899f5216ee85570175acdbcd)
+*  ci: version fha 1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/14cdc552ad109c5f171fb112cd5c53da56999763)
+*  fix(hpi-168): updated messages to use persistent delivery modes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4531cd3483e03a364959094070787d9ca0469ba8)
+*  test(hpi-168): tests written to check created messages are persistent [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/25bf6368d166de176d13221f3a9471abe6ff9d2e)
+*  test(hpi-168): cased step defs properly this time [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8ca4fefce18395081a86b195d26135010ad71f0a)
+
+
+##  fha/1.0 (2018-07-24)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  feat: changed all responses to be a JSON reply [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8ff3c9df817fe10d3c19dba82f9a185f41ab01ba)
+*  docs(spec-api): changed the spec api to match what is there [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/609d743790bd7ccf802653269e740de85222a3af)
+*  test(cucumber): added requirements to the BDD suite for correlation id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e647299acab1a8a455539fbb43490eeebed6fcc9)
+*  test(SubmissionHandlerTest): added requirement for correlation id [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83dafbef64cb1a6c3eec0179970f8d4bc86929dd)
+*  chore: lexicographical order [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/721fe05732ca975bec597ffdecc8fcf0834231e1)
+*  feat: added a default exception handler and correlation id to all items [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/036d691470f05bdccf00e00fdc0e3d9aafac838f)
+*  fix: 404 not found is now registered with DropWizard properly [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dd30b23454c19a471d4f0127ff3c124175a8e5b8)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+*  ci(version): create fha-SNAPSHOT version [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/b34c100e14cf8e804fe0e1ccdaa6c3902e48dbee)
+*  feat(logging):new logging format output to JSON [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/62194941bdf50cb285b67382cb02290cf6566d7b)
+*  fix(sonar): remov unused dependencies from classes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f66f831fc63abd4ca44919d79a30de66fc04f4b9)
+*  feat(logging): Alter default log level to INFO, rather than DEBUG [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/13f388b5cbfc4622a577bf36595133626c174718)
+*  fix: Remove DWPEncodedLogger instance reference [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/37f75caaa6bc28a6899f5216ee85570175acdbcd)
+*  ci: version fha 1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/14cdc552ad109c5f171fb112cd5c53da56999763)
+
+
+##  v2.0.0 (2018-06-27)
+
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9c5c55ae91f92222c8e9172b8314fa6b23306852)
+*  release/1.0.0 build [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ed6415dad95e0b6df52a268e628b4a9b4ed6078)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  release : fast-forward master to the same level [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c919c83d76ec0041c448d583af0ccf1f257aae27)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  fix(packages): fix package names to HealthPDU standard [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3f69b82565419f38795ec77594f263efc8eb37d8)
+*  refactor: update API endpoint after renaming to `/submission` [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7af3d189920074a745fe8b76ed858526cbdb8ae3)
+*  chore: package v2.0.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/18dd584948ca9773438112371eeb5f6f666cb9e6)
+
+
+##  archive/mongo-connection (2018-05-21)
+
+*  fix(mongo): if Mongo goes away the injected MongoClient becomes stale and fails from that point forwards.  Create/Close connections as required [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4d802f44b45a4830f1cdfa153df027412c0e38c9)
+*  fix(class-cast): remediate the Checkmarx medium risk for unchecked class cast by forcing the Class.forName to subclass to Payload.class [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0fb51f58334cbff46478824db2b05b4f6864002b)
+
+
+##  archive/abstraction (2018-05-21)
+
+*  alter logging of invalid date [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9f129273a141d0f1e238aa0c7d7331d557bafdf3)
+*  docs: modify comment on why use 5 days [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/44fe3385ebe1ff247b8693628c5dbd9a71137c55)
+*  add in sonar binaries path [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0f05cb35a8870dc6ee7fdec4727213b2cee0cde8)
+*  modify nexus path in docker file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/eaf0c76a4341899312ec55288518daf19cfb68af)
+*  fix(URL): in order to support the seed-list naming convention for mongo clusters 'mongodb+srv://user:password@mongodb.com' the URL needed to be updated to java.net.URI.  SSL will be enabled if the truststore file name is NOT null in the configuration [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c8964db44dccb465f53fbcfaa158d498a8f7ce24)
+*  fix(mongo):  fixed support for mongo+srv URI naming and renamed the configuraiton item to be URI instead of URL.  Also looking at replaced Fongo as this does not work with the newest mongo version at the moment (https://github.com/fakemongo/fongo/issues/316) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/537b6871dace2134f886603aa24b0d18823445e8)
+*  fix(mongo): remove Fongo as it does not (yet) support Mongo 3.7.0 which we must use in order to support the +srv URI functionality.  Using embedded-mongo instead for all database interactions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1b31db65f7f5e6a8bfb8e25dcc5407f1fb1f5093)
+*  feat(mongo): ingore the SAN certificate error when connecting to Mongo Atlas by allowing certificates names that do not match the hostname [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/54f84eb4c686e21a6db15cab69547f1e27815ac0)
+*  fix(atlas): adding in a configurable switch for 'sslInvalidHostNameAllowed' to cater for the certificate not having the original hostname in Mongo Atlas. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4eee64c85f34c0c94aee2a8db8bb61ead1cf1b46)
+*  fix(rabbit): include truststore/keystore configuration parmaeters for rabbitmq connection [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e8a2c0558d171b2063d1590b16a374387a0de384)
+*  refactor: extract mongoclient creation into factory [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a654b2dfe48719ffbf6a0aab651b39310aca4919)
+*  refactor: configure timeouts for mongoclient [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/181d153ccda99838866204dd442a20c56c0e826e)
+*  refactor: Create 'Payload' Abstraction [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/99afa9134ef4126812d40efa1ef4ad783c777502)
+*  refactor: Make payload class configurable at runtime [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/64ac67c3d2791def82a9c7886cfb7368dc52ca44)
+*  refactor: make default request handler serve on /submission [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e9191f626544caab5b77714fdff53dd60878de9b)
+*  refactor: make test request call on /submission [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1b3b66a376280cd189e669a7f48b999616079af7)
+*  fix(rabbit): use the latest version of rabbitmq library that will reuse a single connection [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ecc0e8f38329f2ca9306a4eb8f93e1be3ae6a108)
+*  fix(rabbitmq): fix rabbitmq static issues [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/340ea3d8fe61e2fe3f4ae4ab945c3c327f9d1bb0)
+*  refactor: Change schema name to receiveSubmission [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9f9a319e5de4bf3f08541699ef0b2afde4e118dc)
+*  refactor: Bump version to 2.0-SNAPSHOT due to breaking changes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6c4a5efb4575629ff8c616ff03bf3d214e82d31d)
+*  fix(naming): ajust the main class for ATW to reflect the usage, with config updates [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ebd5b38eabae174333215efed60a5822f0da545)
+*  feat(format): run through standard formatter and created a BaseItem interface to use in item classes that are not of type Payload [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/aee2990a53a4763d60c7b6251843186445e86365)
+
+
+##  archive/ATW-291 (2018-04-19)
+
+*  fix(typo) - incorrectly named api file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9db6232c4b8bb6c96ae60d8fcec4a7a96c417674)
+*  fix(version) - update versions for dependencies and refactor for new logging framework [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a31ac5ed64d31915efa53737974a9114a5c0277a)
+*  first pass at adding the days [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1ec051f52ff2666c1fadcd424b265f74cafbecef)
+
+
+##  archive/config-guidance (2018-03-26)
+
+*  Ready for release/1.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f2dd9c0dca96cfe4e21d212cf90d611be78558f8)
+*  doc(encryption) - updating readme to better describe the encryption at work for both Mongo and RabbitMQ [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f8a7a4ac458edee0fd66820dfd59e2384d23e086)
+*  doc(encryption) - including options and examples for dataKeyRequestId [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3ebff7e3a1bbc2051f0e66b471d6314b13f5a1ec)
+
+
+##  release/1.1.0 (2018-03-16)
+
+*  fix(checkmarx) - address vulnerability for private array returned in public method [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/46acc47227b3a2de86f28186da092ccd92d5184d)
+*  fix(typo) - typo [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/4268703fcd65147c12c4504c7bf8726a2e4a096b)
+*  Ready for release/1.1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f2dd9c0dca96cfe4e21d212cf90d611be78558f8)
+
+
+##  archive/ATW-25 (2018-03-16)
+
+*  fix(version) - databind owasp check [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/2fff95c370ef3d2edd362a39d1d3056c916fceea)
+*  feat: ensure no duplicate application reference with unique key constraint in DB: ATW-25 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c1e5aef39518ee04c2834ef350d3b00195818f34)
+*  style: linting and mod to remove specific mongo error code [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0d51f17c540f4456e484a305357fa68130670e91)
+*  fix(scenario) - scenario name did not explain what the cucumber test would do [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/227cace0ec0478efd269d4905d2a9a37049d1543)
+*  fix(logging) - apply standard logging across all caught exceptions [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8f83ca0b54841134d35d071a0761c7aed0f0d880)
+*  fix(rabbit) - forgot to copy the cert file in and adjusted the config to reference it correctly [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/722f7fcdf886a3515cea1c7a8450b1f553949d61)
+
+
+##  archive/ATW-10 (2018-03-15)
+
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+*  refactor(api): change api property fullname to full_name [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/49b3667bb35c8c75d6fe9cec050edd851e098060)
+*  Added Jenkinsfile [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9cc36a0f89608cec7a00928c0a2e6961694731d8)
+*  feat(ci): add Dockerfile [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/abdbce3a6b27ae262067d36300254d03ebbf2e1d)
+*  fix(ci): update Dockerfile [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/83868bb0a18f3c34460c5e6642c2aa50cfc884ac)
+*  feat(ci): add sonar-project.properties file [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8cb51c2850ca64d0117889393101fdb5f43f09bc)
+*  fix(ci): fix typo in Dockerfile [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4107c0c5cd2d0bc8c97629b5e8ef0ea9f5f472b)
+*  test(validation) - removed mandatory enforcement of 'premises' on the residence address'.  'lines' must be present and 'postcode' must be present with real postcode [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/71818a33d9e2be0ed61232a0a9f3a3abec30516c)
+*  test(validation) - surname is no longer a mandatory field.  Either 'ContactOption' or 'Representative' must be passed.  If passed, they must be valid [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6e2bb337683a2a9a1ce0e0238623049e9d70d120)
+*  fix(validation) - email address is not mandatory for representative [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/cbc48018b0136724b97b16be9855b94d235b7ba5)
+*  fix(validation) - fixing validation and tests with the introduction of the new broker.  the jsonSchemaDoc.json needs to be updated in line with the updates spec and events yml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/38ba34e74ad5e5ad3c3e601fa5dc12b816128950)
+*  test(validation) - updated api and event yml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e08127038c566ea824a87842aeefeb0c7dd2aec4)
+*  test(validation) - further changes to reflect potentially nullable fields [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/a7d7b47fc61fac239b227a291e92be94ced24555)
+*  fix(general) - general fixes that have been externalised to supporting libraries.  As such, they reference locally built SNAPSHOT versions which should be replaced with real versions when they are built [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/7ad2af00d00b800bccc83d7da4d5c21c527b9343)
+*  fix(validation) - addressing nullable fields and arrays based on the initial spec-api and events-api [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/8e2fca2790d2cf344db56768f5b7e93d121a6c7c)
+*  test(cucumber) - increased number of test scenarios to verify the nullable field functionality and messaging. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/53361bdbc52cd9d9461a5b868ed2c5c2d0e898f5)
+*  test(validation) - updated validation to only remove NULL class properties from deserialisation with extra tests and the required changes to the spec/events api.  nullable properties are no longer allowed. [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ac06f409d55fd62d3b87b9a54775a989446073f5)
+*  fix(messaging) - fixed messaing updates and tests for the new mechanism of publishing and subscribing.  at the moment all messages are published un-encrypted [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/73a171dccb89b708bc3f6dbcadf0ec4653c19d6e)
+*  fix(owasp) - fixed jackson-databind vulnerability [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/e23e9ba0bd336617b54496b4b26a9e452f4212fa)
+*  fix(typo): fix typo in events spec [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/12df751444180708b377a08f4b22356051c6d892)
+*  fix(events-version) - fixin the events version to take advantage of the encryption options.  also to update the configuration items in line with other services [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f586b40b57cb7b8dcbe194134c84e415cfa957f9)
+*  doc(event/readme) - updated event and readme for building the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d9e93c1ee7aee654637e0cbff50cf66964750aa2)
+*  doc(event/readme) - updated event and readme for building the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/925023a28b1a45b463688eea6d67319951142866)
+*  doc(event/readme) - updated event and readme for building the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/816470adaaa1419bfc47001939a1392e47aec287)
+*  doc(event/readme) - updated event and readme for building the application [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ce81bfd0f80d29f7ec7f88fdd435b419cc1baf87)
+*  another try [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/d2c2aa4693e06be9a5dc084cf4c5417e14b4c659)
+*  feat: implement new crypto work in submission handler. First pass [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/05a6e792bdf4e4ac5a5c219081f633e0f6727acf)
+*  fix(versions) - updating utility libraries (postcode, logger, secure-sockers, secure-strings to the most recent uk.gov.uk version and updating imports accordingly [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9f178cf8f7059912f8e10f163dc2b648af5cc120)
+*  fix(layout) - applied Ctrl+Alt+L standard spacing and formatting [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/1aa96500e4e5cc2534f5850f6e0d2baba023e552)
+*  fix(dependency) - fixed dependency (and excludes) for qpid version 6 and moved/changed rabbit config [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/106250b0596fd150646b874d3376e224c0020eaf)
+*  fix(dependency) - fixed dependency (and excludes) for qpid version 6 and moved/changed rabbit config [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/235f784212c146f1d9c6d000d6f98cc86cf87b11)
+*  fix(trigger) - adding triggered by to the configuration file with relevant changes [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/311ccbae665bbaf44cf75c4026c743e01d420ffd)
+*  refactor(msg-create) - the MetaData can be implicitly created with a single line call for publishing [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/07e7ac4632515ba7cf007d03c3bee6bcdc13ba30)
+*  doc(readme) - removed dependencies (too difficult to maintain) and added some instructions to build and run [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/3abc7e2fae2778cc4147703a1cc357779b472cd4)
+*  merge(develop) - merged develop into this branch as there were significant differences, noteably the json schema handler will not allow null objects to be passed [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/5d533820137065f246a0693e678ff7c9a8b40e5b)
+
+
+##  release/0.1.0 (2017-12-13)
+
+*  fix(pom) : correct version number for postcode validator [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/63ce838d370cc394a707027b9d932a5fe36d75fd)
+*  new release : new release with ATWDC-1452 implementing the updated kms-crypto functionality (ATWDC-1449) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/0efd8b1a5b86d2bbfa9bde4a8a971c866edf6681)
+
+
+##  archive/ATWDC-1452 (2017-12-13)
+
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)
+*  fix(pom) : reference new version of kms-crypto (1.0.3) [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/09b4ebd3ad70c83dffa79810417976bf99d8378b)
+*  fix(kms) : remove access key and secret from configurations, these will be resolve automatically by DefaultAWSCredentialsProviderChain [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/dbd19ae16298dd445481bdccb22324f7b4a79b45)
+*  fix(kms) : create 2 runtime variables for 'aws.accessKeyId' and 'aws.secretKey' for DefaultAWSCredentialsProviderChain to resolve the access privileges for kms without having to query the MetaData service (which would require and additional wiremock).  This will allow the kms crypto service to operate correctly for integration tests [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/f28d841e06d2177d910a7fe290fd6b3faf9d8379)
+
+
+##  release/0.0.1 (2017-12-11)
+
+*  doc(spec-api) : new api specification swagger document [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/45eb4c7234e9fff301321932de80308177e84cc3)
+*  addition of spec-events.yaml [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/be5f50fb0f16da3a1b27e79628a52617bb471e74)
+*  doc(specs) : addition of events and api documents [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/6d9153e9677408938740a953834019e8968939bd)
+*  fix(schema) : fixed the incorrect type for the contact_options.data form object to string [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/ff2193120f68022e9917a560f7940721f7bceff5)
+*  fix(pom) : correct version number for postcode validator [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/63ce838d370cc394a707027b9d932a5fe36d75fd)
+*  fix(version) : use the latest version of the secure-sockets jar; 1.3 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/c4b3a15cdc4903a0497d055c9c402c868555ea29)
+*  fix(version) : use the latest version of the postcode-validator jar; 1.0 [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/9ec9d7cdc794e4278fe8c5a78db0badb9b19e4cb)
+*  prepare for initial release to proof test the build pipline and publish to Nexus [View](https://gitlab.com/dwp/health/shared-components/components/ms-submission-handler/-/commit/705c5f126771726e7cb297be68145173a3def1f2)

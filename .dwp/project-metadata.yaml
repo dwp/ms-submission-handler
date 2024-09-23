@@ -1,16 +1,16 @@
-$schema: https://gitlab.com/dwp/secure-development/schema/project-metadata/-/raw/v1.0.0/schema/project-metadata.json
+$schema: https://gitlab.com/dwp/secure-development/schema/project-metadata/-/raw/v2.0.0/schema/project-metadata.json
 
-schema_version: 1.0.0
+schema_version: 2.0.0
 
 project:
   - project_id: 26961517
     component_name: ms-submission-handler
 
-    version: 5.1.0
+    version: 5.2.0
 
     last_verified:
-      date: "2024-08-21"
-      name: "@udaya.lekkala"
+      date: "2024-09-11"
+      name: "@pankaj.khare"
 
     tags:
       payments: false
