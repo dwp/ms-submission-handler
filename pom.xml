@@ -5,7 +5,7 @@
 
     <groupId>uk.gov.dwp.health</groupId>
     <artifactId>ms-submission-handler</artifactId>
-    <version>5.2.0</version>
+    <version>5.3.0</version>
 
     <properties>
         <dwp.message-utility.version>4.0.0-5bc46d5a</dwp.message-utility.version>
